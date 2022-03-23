@@ -25,5 +25,7 @@ Cypress.Commands.add("assertHiddenInput", (value) => {
 })
 
 Cypress.Commands.add("typeDate", (value) => {
-  cy.get(visibleInput).clear().type(value)
+  // Not sure why we need to call clear() twice but evidently
+  // it is necessary when Cypress runs on Firefox and Electron.
+  cy.get(visibleInput).clear().clear().type(value)
 })
