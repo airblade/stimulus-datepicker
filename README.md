@@ -10,13 +10,13 @@ Your server need only deal with ISO8601 while all the localising and delocalisin
 Rails 7 importmaps:
 
 ```
-bin/importmap pin stimulus-autocomplete
+bin/importmap pin stimulus-datepicker
 ```
 
 Other:
 
 ```
-yarn add stimulus-autocomplete
+yarn add stimulus-datepicker
 ```
 
 
