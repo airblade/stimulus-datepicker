@@ -1,0 +1,5 @@
+{
+  "baseUrl": "http://localhost:3030",
+  "defaultCommandTimeout": 1000,
+  "pluginsFile": false
+}

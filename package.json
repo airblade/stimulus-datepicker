@@ -1,0 +1,41 @@
+{
+  "name": "stimulus-datepicker",
+  "version": "0.0.1",
+  "description": "StimulusJS datepicker component",
+  "author": "Andrew Stewart <boss@airbladesoftware.com>",
+  "type": "module",
+  "main": "src/datepicker.js",
+  "source": "src/datepicker.js",
+  "exports": "./src/datepicker.js",
+  "license": "MIT",
+  "keywords": [
+    "stimulus",
+    "simulusjs",
+    "calendar",
+    "datepicker",
+    "components"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/airblade/stimulus-datepicker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/airblade/stimulus-datepicker/issues"
+  },
+  "homepage": "https://github.com/airblade/stimulus-datepicker",
+  "peerDependencies": {
+    "@hotwired/stimulus": "^3.0.0"
+  },
+  "devDependencies": {
+    "@hotwired/stimulus": "^3.0.0",
+    "cypress": "^9.5.2",
+    "http-server": "^14.1.0",
+    "start-server-and-test": "^1.14.0"
+  },
+  "scripts": {
+    "start": "http-server ./cypress/fixtures -p 3030",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test": "start-server-and-test start http://localhost:3030 cy:run"
+  }
+}
