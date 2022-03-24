@@ -17,7 +17,6 @@ export default class Datepicker extends Controller {
 
   dateValueChanged(value, previousValue) {
     if (!this.hasHiddenTarget) return
-    console.log(`callback: ${previousValue}->${value}`)
 
     this.hiddenTarget.value = value
     this.inputTarget.value = this.format(value)
