@@ -36,6 +36,9 @@
     "start": "http-server ./cypress/fixtures -p 3030",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "test": "start-server-and-test start http://localhost:3030 cy:run"
+    "test": "start-server-and-test start http://localhost:3030 cy:run",
+    "preversion": "yarn test",
+    "postversion": "git push && git push --tags && yarn publish . --tag $npm_package_version",
+    "release": "yarn version"
   }
 }
