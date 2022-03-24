@@ -10,7 +10,7 @@ export default class Datepicker extends Controller {
   }
 
   connect() {
-    this.addHiddenInput()
+    if (!this.hasHiddenTarget) this.addHiddenInput()
     this.addInputAction()
     this.dateValue = this.inputTarget.value
   }
