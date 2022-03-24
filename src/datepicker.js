@@ -12,7 +12,7 @@ export default class Datepicker extends Controller {
   connect() {
     this.addHiddenInput()
     this.addInputAction()
-    this.dateValue = this.inputTarget.value  // ISO8601
+    this.dateValue = this.inputTarget.value
   }
 
   dateValueChanged(value, previousValue) {
