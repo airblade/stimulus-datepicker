@@ -1,6 +1,6 @@
 # Stimulus Datepicker
 
-This is a tiny (1.5kB gzipped) Stimulus controller which converts ISO8601 dates (YYYY-MM-DD) from the server to/from dates typed by the user, according to the format you specify.
+This is a tiny (1.8kB gzipped) Stimulus controller which converts ISO8601 dates (YYYY-MM-DD) from the server to/from dates typed by the user, according to the format you specify.
 
 Your server produces an ISO8601 date; your user interacts with it in the format you specify; and your form sends it in ISO8601 format back to the server.
 

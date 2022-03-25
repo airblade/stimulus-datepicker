@@ -39,6 +39,7 @@
     "test": "start-server-and-test start http://localhost:3030 cy:run",
     "preversion": "yarn test",
     "postversion": "git push && git push --tags && yarn publish . --tag $npm_package_version",
-    "release": "yarn version"
+    "release": "yarn version",
+    "size": "gzip -c src/datepicker.js | wc -c"
   }
 }
