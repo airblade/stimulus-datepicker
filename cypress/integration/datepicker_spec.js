@@ -22,13 +22,13 @@ describe('Stimulus datepicker', () => {
     cy.assertVisibleInput('2022-04-01')
     cy.assertHiddenInput('2022-04-01')
 
-    cy.setFormat('%d %-d %m %-m %B %b %Y %y')
-    cy.assertVisibleInput('01 1 04 4 April Apr 2022 22')
+    cy.setFormat('%d %m %Y')
+    cy.assertVisibleInput('01 04 2022')
     cy.assertHiddenInput('2022-04-01')
   })
 
 
-  it('parses the visible date', () => {
+  it('parses the visible date and updates the hidden date', () => {
     // default format
     cy.typeDate('2021-04-06')
     cy.assertVisibleInput('2021-04-06')
@@ -39,27 +39,9 @@ describe('Stimulus datepicker', () => {
     cy.assertVisibleInput('06 05 2022')
     cy.assertHiddenInput('2022-05-06')
 
-    cy.setFormat("%-d %-m %y")
-    cy.typeDate('2 7 22')
-    cy.assertVisibleInput('2 7 22')
-    cy.assertHiddenInput('2022-07-02')
-
-    cy.setFormat("%d %B %Y")
-    cy.typeDate('09 March 2022')
-    cy.assertVisibleInput('09 March 2022')
-    cy.assertHiddenInput('2022-03-09')
-
-    cy.setFormat("%d %b %Y")
-    cy.typeDate('07 Apr 2022')
-    cy.assertVisibleInput('07 Apr 2022')
-    cy.assertHiddenInput('2022-04-07')
-  })
-
-
-  it('ignores invalid date from user', () => {
-    cy.typeDate('2022-04-0')
-    cy.assertVisibleInput('2022-04-0')
-    cy.assertHiddenInput('2022-04-01')
+    cy.typeDate('02 01 202')
+    cy.assertVisibleInput('02 01 202')
+    cy.assertHiddenInput('2022-05-06')
   })
 
 })

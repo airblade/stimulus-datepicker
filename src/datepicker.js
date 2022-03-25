@@ -47,39 +47,39 @@ export default class Datepicker extends Controller {
   // Formats an ISO8601 date, using the `format` value, for display to the user.
   // Returns an empty string if `str` cannot be formatted.
   //
-  // @param [String] ISO8601 date
-  // @return [String] date for display to the user
+  // @param str [String] a date in YYYY-MM-DD format
+  // @return [String] the date in a user-facing format, or an empty string if the
+  //   given date cannot be formatted
   format(str) {
-    const date = new Date(str)
-    if (date.toString() == 'Invalid Date') return ''
+    if (!this.isValidISO8601Date(str)) return ''
 
-    const day = date.getDate(),
-      month = date.getMonth(),
-      year = date.getFullYear()
+    const [yyyy, mm, dd] = str.split('-')
 
     return this.formatValue
-      .replace('%d',  this.twoDigit(day))
-      .replace('%-d', day)
-      .replace('%m',  this.twoDigit(month + 1))
-      .replace('%-m', month + 1)
-      .replace('%B',  date.toLocaleString('default', {month: 'long'}))
-      .replace('%b',  date.toLocaleString('default', {month: 'short'}))
-      .replace('%Y',  year)
-      .replace('%y',  year % 100)
+      .replace('%d',  dd)
+      .replace('%-d', +dd)
+      .replace('%m',  this.twoDigit(mm))
+      .replace('%-m', +mm)
+      .replace('%B',  this.localisedMonth(mm, 'long'))
+      .replace('%b',  this.localisedMonth(mm, 'short'))
+      .replace('%Y',  yyyy)
+      .replace('%y',  +yyyy % 100)
   }
 
   // Parses a date from the user, using the `format` value, into an ISO8601 date.
+  // Returns an empty string if `str` cannot be parsed.
   //
-  // @param [String] date displayed to the user, e.g. 19/03/2022
-  // @return [String] ISO8601 date
+  // @param str [String] a user-facing date, e.g. 19/03/2022
+  // @return [String] the date in ISO8601 format, e.g. 2022-03-19; or an empty string
+  //   if the given date cannot be parsed
   parse(str) {
     const directives = {
        'd': ['\\d{2}',   function(match) { this.day = +match }],
       '-d': ['\\d{1,2}', function(match) { this.day = +match }],
-       'm': ['\\d{2}',   function(match) { this.month = +match - 1 }],
-      '-m': ['\\d{1,2}', function(match) { this.month = +match - 1 }],
-       'B': ['\\w+',     function(match, controller) { this.month = controller.monthIndex(match, 'long') }],
-       'b': ['\\w{3}',   function(match, controller) { this.month = controller.monthIndex(match, 'short') }],
+       'm': ['\\d{2}',   function(match) { this.month = +match }],
+      '-m': ['\\d{1,2}', function(match) { this.month = +match }],
+       'B': ['\\w+',     function(match, controller) { this.month = controller.monthNumber(match, 'long') }],
+       'b': ['\\w{3}',   function(match, controller) { this.month = controller.monthNumber(match, 'short') }],
        'Y': ['\\d{4}',   function(match) { this.year = +match }],
        'y': ['\\d{2}',   function(match) { this.year = 2000 + +match }]
     }
@@ -98,27 +98,64 @@ export default class Datepicker extends Controller {
       funcs[i].call(parts, matches[i + 1], this)
     }
 
-    // Construct a date instance to check validity of the parsed parts.
-    if (new Date(parts.year, parts.month, parts.day).toString() == 'Invalid Date') return ''
-
-    // Return an interpolated string to avoid local time zone vs UTC differences.
-    return `${parts.year}-${this.twoDigit(parts.month + 1)}-${this.twoDigit(parts.day)}`
+    if (!this.isValidDate(parts.year, parts.month, parts.day)) return ''
+    return `${parts.year}-${this.twoDigit(parts.month)}-${this.twoDigit(parts.day)}`
   }
 
-  monthIndex(str, format) {
-    return this.monthNames(format).findIndex(m => str.includes(m))
+  // Returns the name of the month in the current locale.
+  //
+  // @param month [Number] the month number (January is 1)
+  // @param monthFormat [String] "long" (January) | "short" (Jan)
+  // @return [String] the localised month name
+  localisedMonth(month, monthFormat) {
+    // Use the middle of the month to avoid timezone edge cases
+    return new Date(`2022-${month}-15`).toLocaleString('default', {month: monthFormat})
   }
 
+  // Returns the number of the month (January is 1).
+  //
+  // @param name [String] the name of the month in the current locale (e.g. January or Jan)
+  // @param monthFormat [String] "long" (January) | "short" (Jan)
+  // @return [Number] the number of the month, or 0 if name is not recognised
+  monthNumber(name, monthFormat) {
+    return this.monthNames(monthFormat).findIndex(m => name.includes(m)) + 1
+  }
+
+  // Returns the month names in the the current locale.
+  //
+  // @param format [String] "long" (January) | "short" (Jan)
+  // @return [Array] localised month names
   monthNames(format) {
     const formatter = new Intl.DateTimeFormat('default', {month: format})
     return ['01','02','03','04','05','06','07','08','09','10','11','12'].map(mm =>
-      formatter.format(new Date(`2022-${mm}-01`))
+      // Use the middle of the month to avoid timezone edge cases
+      formatter.format(new Date(`2022-${mm}-15`))
     )
   }
 
   // Returns a two-digit zero-padded string.
   twoDigit(num) {
     return num.toString().padStart(2, '0')
+  }
+
+  isValidISO8601Date(str) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(str)) return false
+    return this.isValidDate(...str.split('-'))
+  }
+
+  isValidDate(year, month, day) {
+    if (year  < 2000 || year  > 2999) return false
+    if (month <    1 || month >   12) return false
+    if (day   <    1 || day   >   31) return false
+    if ([4, 6, 9, 11].includes(month) && day > 30) return false
+    if (month == 2 && day > (this.isLeapYear(year) ? 29 : 28)) return false
+    return true
+  }
+
+  isLeapYear(year) {
+    if ((year % 400) == 0) return true
+    if ((year % 100) == 0) return false
+    return year % 4 == 0
   }
 
 }
