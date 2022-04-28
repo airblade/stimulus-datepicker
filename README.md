@@ -1,21 +1,23 @@
 # Stimulus Datepicker
 
-This is a tiny (1.8kB gzipped) Stimulus controller which converts ISO8601 dates (YYYY-MM-DD) from the server to/from dates typed by the user, according to the format you specify.
+This is a Stimulus-powered datepicker which:
 
-Your server produces an ISO8601 date; your user interacts with it in the format you specify; and your form sends it in ISO8601 format back to the server.
+- localises and parses dates in the input field according to the strftime directives you configure;
+- presents a calendar closely adhering to the [WAI-ARIA date picker dialog](https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/datepicker-dialog.html) design pattern;
+- sends the date back to the server in ISO8601 format (YYYY-MM-DD).
 
-Dates are handled without reference to timezones or daylight savings.
+Your server produces an ISO8601 date; your user interacts with it in the format you configured and/or via the popup calendar; the form sends the date back to the server in ISO format.
+
+Month and day names are generated in the user's locale.
+
+Dates are local; no timezones or daylight savings are involved.
+
+The calendar is minimally styled so you can easily adjust its appearance with a little CSS.
+
+Size gzipped: JS 5.5kB, CSS 0.9kB.
 
 
 ## Installation
-
-Rails 7 importmaps:
-
-```
-bin/importmap pin stimulus-datepicker
-```
-
-Other:
 
 ```
 yarn add stimulus-datepicker
@@ -34,38 +36,98 @@ Register the datepicker controller with your Stimulus application:
 + application.register('datepicker', Datepicker)
 ```
 
-To use the datepicker, wrap your date input with a controller div.
+To use the datepicker, wrap your input field with a controller div.
 
 ```html
-<div data-controller="datepicker" data-datepicker-format-value="...">
+<div data-controller="datepicker">
   <input data-datepicker-target="input" type="text" name="foobar" value="2022-03-23"/>
+  <span data-datepicker-target="toggle">calendar</span>
 </div>
 ```
 
-Use the `data-datepicker-format-value` to specify the way the date should appear to the user.  You can use the following formatting directives:
+Your calendar icon or equivalent must have the data attribute `data-datepicker-target="toggle"`.
+
+The input field:
+
+- must have the data attribute `data-datepicker-target="input"`;
+- should have `type="text"`, not `type="date"`, to avoid conflicting with built-in browser functionality;
+- must have a `name`;
+- its `value`, if given, must be a YYYY-MM-DD date string.
+
+
+## Configuration
+
+You can configure your datepicker with the following attributes.  Declare them on your controller as `data-datepicker-[name]-value`.
+
+| Name | Default | Description |
+|--|--|--|
+| `format` | `"%Y-%m-%d"` | Format for the date in the input field (see below). |
+| `first-day-of-week` | `1` | First day of the week in the calendar (Sunday is `0`). |
+| `day-name-length` | `2` | Length of the abbreviated day names in the calendar, e.g. "Mo". |
+| `previous-today-next` | `"&#9664;:&#9679;:&#9654;"` (i.e. &#9664; &#9679; &#9654;) | Text for the previous/today/next month buttons (colon-separated). |
+| `jump` | `"absolute"` | When jumping to the previous/next month, whether to go to the same date (`"absolute"`) or the same day of the week (`"relative"`). |
+
+You can use the following strftime directives in `data-datepicker-format-value`:
 
 | Directive | Meaning |
 |--|--|
-| %d | Day of the month, zero-padded (01..31) |
-| %-d | Day of the month, no padding (1..31) |
-| %m | Month of the year, zero-padded (01..12) |
-| %-m | Month of the year, no padding (1..12) |
-| %B | The full month name in the browser's locale (January) |
-| %b | The abbreviated month name in the browser's locale (Jan) |
-| %Y | Full year, four digits (2022) |
-| %y | Year in 21st Century, two digits (22) |
-
-The `data-datepicker-format-value` is optional and defaults to ISO8601 (`%Y-%m-%d`).
-
-The date input:
-
-- must have `data-datepicker-target="input"`;
-- should have `type="text"`, not `type="date"`, to avoid conflicting with built-in browser functionality;
-- must have a `name`;
-- its `value` must be a YYYY-MM-DD date string.
+| `%d` | Day of the month, zero-padded (01..31) |
+| `%-d` | Day of the month, no padding (1..31) |
+| `%m` | Month of the year, zero-padded (01..12) |
+| `%-m` | Month of the year, no padding (1..12) |
+| `%B` | The full month name in the browser's locale (January) |
+| `%b` | The abbreviated month name in the browser's locale (Jan) |
+| `%Y` | Full year, four digits (2022) |
+| `%y` | Year in 21st Century, two digits (22) |
 
 
-## Intellectual Propery
+## Keyboard support
+
+The datepicker is fully navigable by keyboard.  In addition to the WAI-ARIA keys, you can also use Vim-style movement keys.
+
+### Toggle target (your calendar icon)
+
+| Key | Result |
+|--|--|
+| <kbd>Space</kbd>, <kbd>Enter</kbd> | <ul><li>Open the datepicker dialog.</li><li>Move focus to selected date, i.e. the date displayed in the input text field.  If no date has been selected, focus on the current date.</li></ul> |
+
+### Datepicker dialog (the calendar)
+
+| Key | Result |
+|--|--|
+| <kbd>Escape</kbd> | Close the dialog and return focus to the toggle target. |
+| <kbd>Tab</kbd> | <ul><li>Move focus to next element in the dialog's tab sequence.</li><li>The dialog "traps" focus so if focus is on the last item, move focus to the first.</ul> |
+| <kbd>Shift</kbd> + <kbd>Tab</kbd> | <ul><li>Move focus to previous element in the dialog's tab sequence.</li><li>The dialog "traps" focus so if focus is on the first item, move focus to the last.</ul> |
+
+### Previous-month / today / next-month Buttons
+
+| Key | Result |
+|--|--|
+| <kbd>Space</kbd>, <kbd>Enter</kbd> | Change the month displayed in the calendar grid. |
+
+### Date grid
+
+| Key | Result |
+|--|--|
+| <kbd>Space</kbd>, <kbd>Enter</kbd> | Select the date, close the dialog, move focus to the toggle target. |
+| <kbd>Up Arrow</kbd>, <kbd>k</kbd> | Move focus to the same day of the previous week. |
+| <kbd>Down Arrow</kbd>, <kbd>j</kbd> | Move focus to the same day of the next week. |
+| <kbd>Right Arrow</kbd>, <kbd>l</kbd> | Move focus to the next day. |
+| <kbd>Left Arrow</kbd>, <kbd>h</kbd> | Move focus to the previous day. |
+| <kbd>Home</kbd>, <kbd>^</kbd>, <kbd>0</kbd> | Move focus to the first day of the current week. |
+| <kbd>End</kbd>, <kbd>$</kbd> | Move focus to the last day of the current week. |
+| <kbd>Page Up</kbd>, <kbd>b</kbd> | Change the grid of dates to the previous month and focus on the corresponding<sup>*</sup> date one month earlier. |
+| <kbd>Shift</kbd> + <kbd>Page Up</kbd>, <kbd>B</kbd> | Change the grid of dates to the previous year and focus on the same date one year earlier. |
+| <kbd>Page Down</kbd>, <kbd>w</kbd> | Change the grid of dates to the next month and focus on the corresponding<sup>*</sup> date one month later. |
+| <kbd>Shift</kbd> + <kbd>Page Down</kbd>, <kbd>W</kbd> | Change the grid of dates to the next year and focus on the same date one year later. |
+
+<sup>*</sup> The corresponding date in the adjacent month depends on `data-datepicker-jump-value`:
+
+- `"absolute"`: the corresponding date is the same date, e.g. 7th;
+- `"relative"`: the corresponding date is the same day of the week, four weeks earlier/later.
+
+
+## Intellectual Property
 
 This package is copyright Andrew Stewart.
 

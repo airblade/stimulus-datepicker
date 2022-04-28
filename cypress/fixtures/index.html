@@ -3,11 +3,12 @@
   <head>
     <meta charset="utf-8">
     <title>Stimulus Datepicker</title>
-    <script async src="https://unpkg.com/es-module-shims/dist/es-module-shims.js"></script>
+    <link rel="stylesheet" href="./stimulus-datepicker.css">
+    <script async src="./es-module-shims-1.5.4.js"></script>
     <script type="importmap-shim">
       {
         "imports": {
-          "@hotwired/stimulus": "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js"
+          "@hotwired/stimulus": "./stimulus-3.0.1.js"
         }
       }
     </script>
@@ -18,16 +19,38 @@
       const application = Application.start()
       application.register('datepicker', Datepicker)
     </script>
+    <style>
+      body {
+        color: #4a4a4a;
+        background: #fbf7f0;
+      }
+      .container {
+        margin: 20px;
+      }
+      body, select, button, input {
+        font-family: BlinkMacSystemFont, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      }
+      input {
+        border-width: 1px;
+        padding: 5px;
+        border-radius: 3px;
+      }
+    </style>
   </head>
 
   <body>
-    <h1>Stimulus Datepicker test</h1>
+    <div class="container">
+      <h1>Stimulus Datepicker test</h1>
 
-    <div data-controller='datepicker'>
-       <input data-datepicker-target='input'
-              type="text"
-              name="published_on"
-              value="2022-04-01">
+      <div data-controller='datepicker'>
+         <input data-datepicker-target='input'
+                type="text"
+                name="published_on"
+                value="2022-04-01">
+         <button data-datepicker-target='toggle'>cal</button>
+      </div>
+
+      <p>Some text below the date picker so we can check the calendar floats over it.</p>
     </div>
   </body>
 </html>
