@@ -64,7 +64,7 @@ You can configure your datepicker with the following attributes.  Declare them o
 | `format` | `"%Y-%m-%d"` | Format for the date in the input field (see below). |
 | `first-day-of-week` | `1` | First day of the week in the calendar (Sunday is `0`). |
 | `day-name-length` | `2` | Length of the abbreviated day names in the calendar, e.g. "Mo". |
-| `previous-today-next` | `"&#9664;:&#9679;:&#9654;"` (i.e. &#9664; &#9679; &#9654;) | Text for the previous/today/next month buttons (colon-separated). |
+| `previous-today-next` | `"&#9668;:&#9679;:&#9658;"` (i.e. &#9668; &#9679; &#9658;) | Text for the previous/today/next month buttons (colon-separated). |
 | `jump` | `"absolute"` | When jumping to the previous/next month, whether to go to the same date (`"absolute"`) or the same day of the week (`"relative"`). |
 
 You can use the following strftime directives in `data-datepicker-format-value`:

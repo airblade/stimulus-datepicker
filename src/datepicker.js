@@ -11,7 +11,7 @@ export default class Datepicker extends Controller {
     format:            {type: String, default: '%Y-%m-%d'},
     firstDayOfWeek:    {type: Number, default: 1},
     dayNameLength:     {type: Number, default: 2},
-    previousTodayNext: {type: String, default: '&#9664;:&#9679;:&#9654;'},
+    previousTodayNext: {type: String, default: '&#9668;:&#9679;:&#9658;'},
     jump:              {type: String, default: 'absolute'}
   }
 
