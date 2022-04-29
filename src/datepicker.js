@@ -655,9 +655,12 @@ export default class Datepicker extends Controller {
 
   isValidISO8601Date(str) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(str)) return false
-    return this.isValidDate(...str.split('-'))
+    return this.isValidDate(...str.split('-').map(s => +s))
   }
 
+  // @param year [Number] four-digit year
+  // @param month [Number] month number (January is 1)
+  // @param day [Number] day in month
   isValidDate(year, month, day) {
     if (year  < 2000 || year  > 2999) return false
     if (month <    1 || month >   12) return false

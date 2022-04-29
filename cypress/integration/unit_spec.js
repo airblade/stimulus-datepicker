@@ -44,6 +44,7 @@ describe('Stimulus datepicker', () => {
 
   it('isValidISO8601Date', () => {
     assert(controller.isValidISO8601Date('2022-03-25'))
+    assert(controller.isValidISO8601Date('2022-04-29'))
     assert.isFalse(controller.isValidISO8601Date('2022-3-25'))
     assert.isFalse(controller.isValidISO8601Date('20220325'))
     assert.isFalse(controller.isValidISO8601Date('2022 03 25'))
