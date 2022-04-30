@@ -29,6 +29,7 @@
   position: relative;
 }
 .sdp-cal {
+  z-index: 1;
   position: absolute;
   margin-top: 5px;
   box-sizing: border-box;
