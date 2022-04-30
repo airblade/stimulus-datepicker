@@ -7,13 +7,15 @@ describe('Stimulus datepicker', () => {
 
 
   it('adds a hidden input after the visible input with the same name', () => {
-    cy.get('input').should('have.length', 2)
+    cy.get('[data-controller="datepicker"]').within(() => {
+      cy.get('input').should('have.length', 2)
 
-    cy.get('input:first').should('have.attr', 'type', 'text')
-    cy.get('input:last').should('have.attr', 'type', 'hidden')
+      cy.get('input:first').should('have.attr', 'type', 'text')
+      cy.get('input:last').should('have.attr', 'type', 'hidden')
 
-    cy.get('input:first').invoke('attr', 'name').then(name => {
-      cy.get('input:last').should('have.attr', 'name', name)
+      cy.get('input:first').invoke('attr', 'name').then(name => {
+        cy.get('input:last').should('have.attr', 'name', name)
+      })
     })
   })
 
