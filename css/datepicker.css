@@ -75,6 +75,9 @@
   margin-right: 5px;
 }
 .sdp-nav-buttons button {
+  display: flex;
+  place-content: center;
+  place-items: center;
   border-radius: 50%;
   width: 3.0ch;
   height: 3.0ch;
