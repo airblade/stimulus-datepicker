@@ -42,15 +42,19 @@
     <div class="container">
       <h1>Stimulus Datepicker test</h1>
 
-      <div data-controller='datepicker'>
-         <input data-datepicker-target='input'
-                type="text"
-                name="published_on"
-                value="2022-04-01">
-         <button data-datepicker-target='toggle'>cal</button>
-      </div>
+      <form>
+        <div data-controller='datepicker'>
+           <input data-datepicker-target='input'
+                  type="text"
+                  name="published_on"
+                  value="2022-04-01">
+           <button data-datepicker-target='toggle'>cal</button>
+        </div>
 
-      <p>Some text below the date picker so we can check the calendar floats over it.</p>
+        <p>Some text below the date picker so we can check the calendar floats over it.</p>
+
+        <input type="submit">
+      </form>
     </div>
   </body>
 </html>

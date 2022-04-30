@@ -89,7 +89,7 @@ describe('Stimulus datepicker', () => {
   })
 
 
-  it('updates the input and closes the calendar when a date is chosen', () => {
+  it('updates the input, closes the calendar, and does not submit the form when a date is chosen', () => {
     cy.showCalendar()
     cy.contains(/^14$/).click()
     cy.assertNoCalendar()

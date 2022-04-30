@@ -187,6 +187,7 @@ export default class Datepicker extends Controller {
   }
 
   pick(event) {
+    event.preventDefault()
     const dateStr = event.target.hasAttribute('datetime')
       ? event.target.getAttribute('datetime')
       : event.target.querySelector('time').getAttribute('datetime')
