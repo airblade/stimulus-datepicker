@@ -37,9 +37,7 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "test": "start-server-and-test start http://localhost:3030 cy:run",
-    "preversion": "yarn test",
-    "postversion": "git push && git push --tags && yarn publish . --tag $npm_package_version",
-    "release": "yarn version",
+    "release": "git tag v$npm_package_version && git push && git push --tags && npm login && npm publish",
     "size": "gzip -c src/datepicker.js | wc -c"
   }
 }
