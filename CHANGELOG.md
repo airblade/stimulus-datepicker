@@ -3,6 +3,9 @@
 
 ## Unreleased
 
+
+## v0.0.3 (3 Mary 2022)
+
 * Fix <select> background on Firefox.
 * Ensure navigation buttons' content is centered.
 * Ensure calendar renders over other elements.
