@@ -38,6 +38,6 @@
     "cy:run": "cypress run",
     "test": "start-server-and-test start http://localhost:3030 cy:run",
     "release": "git tag v$npm_package_version && git push && git push --tags && npm login && npm publish",
-    "size": "gzip -c src/datepicker.js | wc -c"
+    "size": "curl -s http://ga.jspm.io/npm:stimulus-datepicker@$npm_package_version/src/datepicker.js | gzip -c | wc -c"
   }
 }
