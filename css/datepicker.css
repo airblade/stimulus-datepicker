@@ -66,6 +66,7 @@
   display: flex;
 }
 .sdp-nav-dropdowns select {
+  background: white;
   border: 1px solid transparent;
   font-size: 1.1em;
   font-weight: 500;
