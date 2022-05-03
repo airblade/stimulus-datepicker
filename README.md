@@ -14,7 +14,7 @@ Dates are local; no timezones or daylight savings are involved.
 
 The calendar is minimally styled so you can easily adjust its appearance with a little CSS.
 
-Size gzipped: JS 5.5kB, CSS 0.9kB.
+Size: JS 3.6kB minified and gzipped, CSS 2.7kB gzipped.
 
 
 ## Installation
