@@ -150,12 +150,16 @@ export default class Datepicker extends Controller {
       <div class="sdp-cal" data-datepicker-target="calendar" data-action="click@window->datepicker#closeOnOutsideClick keydown->datepicker#key" role="dialog" aria-modal="true" aria-label="Choose Date">
         <div class="sdp-nav">
           <div class="sdp-nav-dropdowns">
-            <select class="sdp-month" data-datepicker-target="month" data-action="datepicker#redraw">
-              ${this.monthOptions(+mm)}
-            </select>
-            <select class="sdp-year" data-datepicker-target="year" data-action="datepicker#redraw">
-              ${this.yearOptions(+yyyy)}
-            </select>
+            <div>
+              <select class="sdp-month" data-datepicker-target="month" data-action="datepicker#redraw">
+                ${this.monthOptions(+mm)}
+              </select>
+            </div>
+            <div>
+              <select class="sdp-year" data-datepicker-target="year" data-action="datepicker#redraw">
+                ${this.yearOptions(+yyyy)}
+              </select>
+            </div>
           </div>
           <div class="sdp-nav-buttons">
             <button class="sdp-goto-prev"  data-datepicker-target="prevMonth" data-action="datepicker#prevMonth" title="Previous month" aria-label="Previous month">${this.previousButtonText}</button>

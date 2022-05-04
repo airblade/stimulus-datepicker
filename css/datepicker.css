@@ -66,14 +66,31 @@
   display: flex;
 }
 .sdp-nav-dropdowns select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
   background: white;
   border: 1px solid transparent;
   font-size: 1.1em;
   font-weight: 500;
   cursor: pointer;
 }
-.sdp-nav-dropdowns .sdp-month {
-  margin-right: 5px;
+.sdp-nav-dropdowns > div {
+  padding-right: 4px;
+  display: flex;
+  align-items: center;
+}
+.sdp-nav-dropdowns > div:first-child {
+  margin-right: 0.5em;
+}
+.sdp-nav-dropdowns > div::after {
+  content: " ";
+  border: 2px solid #4a4a4acc;
+  border-top: 0;
+  border-right: 0;
+  width: 5px;
+  height: 5px;
+  transform: rotate(-45deg);
+  margin-left: 4px;
 }
 .sdp-nav-buttons button {
   display: flex;

@@ -3,6 +3,8 @@
 
 ## Unreleased
 
+* Make <select> appearance on Safari consistent with Chrome and Firefox.
+
 
 ## v0.0.3 (3 Mary 2022)
 
