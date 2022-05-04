@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+* Improve dates' hover and focus styles.
 * Improve navigation buttons' appearance.
 * Make <select> appearance on Safari consistent with Chrome and Firefox.
 
