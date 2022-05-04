@@ -103,6 +103,28 @@
   background-color: #f5f5f5;
   cursor: pointer;
 }
+.sdp-nav-buttons button.sdp-goto-prev::after,
+.sdp-nav-buttons button.sdp-goto-next::after {
+  content: " ";
+  border: 2px solid #4a4a4acc;
+  border-top: 0;
+  border-right: 0;
+  width: 5px;
+  height: 5px;
+}
+.sdp-nav-buttons button.sdp-goto-prev::after {
+  transform: translateX(1px) rotate(45deg);
+}
+.sdp-nav-buttons button.sdp-goto-next::after {
+  transform: translateX(-1px) rotate(225deg);
+}
+.sdp-nav-buttons button.sdp-goto-today::after {
+  content: " ";
+  border: 2px solid #4a4a4acc;
+  border-radius: 50%;
+  width: 5px;
+  height: 5px;
+}
 .sdp-nav-buttons .sdp-goto-today {
   margin-left: 0.3em;
   margin-right: 0.3em;

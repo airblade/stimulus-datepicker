@@ -11,7 +11,6 @@ export default class Datepicker extends Controller {
     format:            {type: String, default: '%Y-%m-%d'},
     firstDayOfWeek:    {type: Number, default: 1},
     dayNameLength:     {type: Number, default: 2},
-    previousTodayNext: {type: String, default: '&#9668;:&#9679;:&#9658;'},
     jump:              {type: String, default: 'absolute'}
   }
 
@@ -162,9 +161,9 @@ export default class Datepicker extends Controller {
             </div>
           </div>
           <div class="sdp-nav-buttons">
-            <button class="sdp-goto-prev"  data-datepicker-target="prevMonth" data-action="datepicker#prevMonth" title="Previous month" aria-label="Previous month">${this.previousButtonText}</button>
-            <button class="sdp-goto-today" data-datepicker-target="today"     data-action="datepicker#today"     title="Today"          aria-label="Today">${this.todayButtonText}</button>
-            <button class="sdp-goto-next"  data-datepicker-target="nextMonth" data-action="datepicker#nextMonth" title="Next month"     aria-label="Next month">${this.nextButtonText}</button>
+            <button class="sdp-goto-prev"  data-datepicker-target="prevMonth" data-action="datepicker#prevMonth" title="Previous month" aria-label="Previous month"></button>
+            <button class="sdp-goto-today" data-datepicker-target="today"     data-action="datepicker#today"     title="Today"          aria-label="Today"></button>
+            <button class="sdp-goto-next"  data-datepicker-target="nextMonth" data-action="datepicker#nextMonth" title="Next month"     aria-label="Next month"></button>
           </div>
         </div>
         <div class="sdp-days-of-week">
@@ -176,18 +175,6 @@ export default class Datepicker extends Controller {
       </div>
     `
     this.element.insertAdjacentHTML('beforeend', cal)
-  }
-
-  get previousButtonText() {
-    return this.previousTodayNextValue.split(':')[0]
-  }
-
-  get todayButtonText() {
-    return this.previousTodayNextValue.split(':')[1]
-  }
-
-  get nextButtonText() {
-    return this.previousTodayNextValue.split(':')[2]
   }
 
   pick(event) {
