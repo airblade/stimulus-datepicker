@@ -151,7 +151,7 @@
   height: 4.5ch;
   border-radius: 50%;
   background-color: transparent;
-  cursor:pointer;
+  cursor: pointer;
 }
 .sdp-days button:hover,
 .sdp-days button:focus {
