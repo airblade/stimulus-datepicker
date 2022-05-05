@@ -181,3 +181,7 @@
   outline: none;
   border: 2px solid var(--sdp-color);
 }
+.sdp-days button.sdp-prev-month,
+.sdp-days button.sdp-next-month {
+  color: #888;
+}
