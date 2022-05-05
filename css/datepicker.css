@@ -87,8 +87,8 @@
   border: 2px solid #4a4a4acc;
   border-top: 0;
   border-right: 0;
-  width: 5px;
-  height: 5px;
+  width: 0.3em;
+  height: 0.3em;
   transform: rotate(-45deg);
   margin-left: 4px;
 }
@@ -109,8 +109,8 @@
   border: 2px solid #4a4a4acc;
   border-top: 0;
   border-right: 0;
-  width: 5px;
-  height: 5px;
+  width: 0.3em;
+  height: 0.3em;
 }
 .sdp-nav-buttons button.sdp-goto-prev::after {
   transform: translateX(1px) rotate(45deg);
@@ -122,8 +122,8 @@
   content: " ";
   border: 2px solid #4a4a4acc;
   border-radius: 50%;
-  width: 5px;
-  height: 5px;
+  width: 0.3em;
+  height: 0.3em;
 }
 .sdp-nav-buttons .sdp-goto-today {
   margin-left: 0.3em;
