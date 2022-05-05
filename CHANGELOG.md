@@ -3,6 +3,9 @@
 
 ## Unreleased
 
+
+## v0.0.4 (5 May 2022)
+
 * Size arrows in em rather than px.
 * Improve dates' hover and focus styles.
 * Improve navigation buttons' appearance.
