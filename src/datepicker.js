@@ -44,7 +44,7 @@ export default class Datepicker extends Controller {
     if (!this.hasToggleTarget) return
 
     let action = 'click->datepicker#toggle'
-    if (!this.toggleTarget instanceof HTMLButtonElement) action += ' keydown->datepicker#toggle'
+    if (!(this.toggleTarget instanceof HTMLButtonElement)) action += ' keydown->datepicker#toggle'
 
     this.addAction(this.toggleTarget, action)
   }

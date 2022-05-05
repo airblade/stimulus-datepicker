@@ -3,6 +3,8 @@
 
 ## Unreleased
 
+* Fix adding of keydown handler to non-button toggle target.
+
 
 ## v0.0.4 (5 May 2022)
 
