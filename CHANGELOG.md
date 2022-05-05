@@ -9,7 +9,7 @@
 * Make <select> appearance on Safari consistent with Chrome and Firefox.
 
 
-## v0.0.3 (3 Mary 2022)
+## v0.0.3 (3 May 2022)
 
 * Fix <select> background on Firefox.
 * Ensure navigation buttons' content is centered.
