@@ -16,6 +16,8 @@ The calendar is minimally styled so you can easily adjust its appearance with a 
 
 Size: JS 3.6kB minified and gzipped, CSS 2.7kB gzipped.
 
+![screenshot](./screenshot.png?raw=true)
+
 
 ## Installation
 
