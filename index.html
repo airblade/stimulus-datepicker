@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stimulus Datepicker Demo</title>
+    <link rel="stylesheet" href="https://unpkg.com/stimulus-datepicker@0.0.4/css/datepicker.css">
+    <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.5.1/styles/stackoverflow-dark.min.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "stimulus-datepicker": "https://ga.jspm.io/npm:stimulus-datepicker@0.0.4/src/datepicker.js",
+          "@hotwired/stimulus": "https://ga.jspm.io/npm:@hotwired/stimulus@3.0.1/dist/stimulus.js",
+          "highlight": "https://unpkg.com/@highlightjs/cdn-assets@11.5.1/es/highlight.min.js"
+        }
+      }
+    </script>
+
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.1/dist/es-module-shims.js" crossorigin="anonymous"></script>
+    <script type="module">
+      import { Application } from "@hotwired/stimulus";
+      import { Datepicker } from "stimulus-datepicker";
+
+      const application = Application.start();
+      application.register('datepicker', Datepicker);
+    </script>
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/highlight.min.js"></script>
+    <script>hljs.configure({ignoreUnescapedHTML: true}); hljs.highlightAll();</script>
+    <style>
+      body, select, button, input {
+        font-family: BlinkMacSystemFont, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      }
+      .container {
+        margin: 20px auto;
+        max-width: 40rem;
+      }
+      section {
+        margin: 5em 0;
+      }
+      p {
+        margin-top: 0.5em;
+      }
+      a {
+        color: currentColor;
+      }
+      pre {
+        line-height: 1.5;
+        font-size: 0.8rem;
+        margin: 1rem 0;
+      }
+      code, .format {
+        font-family: monaco, Consolas, monospace, monospace;
+      }
+      pre code.language-html {
+        border-radius: 5px;
+        padding: 0 1.5rem;
+        overflow-x: auto;
+      }
+      label {
+        display: block;
+        margin: 0.5em 0;
+      }
+      input {
+        font-size: 1rem;
+        border: 1px solid currentColor;
+        padding: 10px;
+        border-radius: 3px;
+        min-width: 10em;
+        width: 100%;
+      }
+      input[type="submit"] {
+        width: auto;
+        min-width: unset;
+        margin-top: 0.75em;
+      }
+      #output {
+        color: #888888;
+      }
+      svg {
+        fill: white;
+        stroke: #4a4a4a;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        width: 24px;
+        height: 24px;
+      }
+      button[data-datepicker-target="toggle"] {
+        border: 0;
+        background: none;
+        position: relative;
+        left: -40px;
+      }
+      .form-input {
+        display: flex;
+      }
+      .format {
+        background: #eee;
+        border-radius: 3px;
+        padding: 1px 6px;
+      }
+      .columns {
+        display: flex;
+        justify-content: space-between;
+      }
+      .column {
+        width: 50%;
+      }
+      .column + .column {
+        padding-top: 1.5em;
+        color: #888888;
+        font-size: 0.9em;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none">
+      <symbol id="calendar-icon" viewbox="0 0 20 20">
+        <rect x="1" y="3" width="18" height="16"/>
+        <line x1="1" y1="7" x2="19" y2="7"/>
+        <line x1="5" y1="1" x2="5" y2="5"/>
+        <line x1="15" y1="1" x2="15" y2="5"/>
+        <circle cx="5"  cy="11" r="0.5"/>
+        <circle cx="10" cy="11" r="0.5"/>
+        <circle cx="15" cy="11" r="0.5"/>
+        <circle cx="5"  cy="15" r="0.5"/>
+        <circle cx="10" cy="15" r="0.5"/>
+        <circle cx="15" cy="15" r="0.5"/>
+      </symbol>
+    </svg>
+
+    <div class="container">
+      <h1>Stimulus Datepicker Demo</h1>
+
+      <p>stimulus-datepicker is a <a href="https://stimulus.hotwired.dev">Stimulus</a>-powered, accessible datepicker.</p>
+      <p>For documentation, please see the <a href="https://github.com/airblade/stimulus-datepicker">GitHub repository</a>.</p>
+      <p>Here are a few examples showing the default behaviour and a custom format.</p>
+
+
+      <section>
+        <h2>Default, no date initially</h2>
+        <pre><code class="language-html">
+&lt;div data-controller="datepicker"&gt;
+  &lt;input data-datepicker-target="input" type="text" name="foo"/&gt;
+  &lt;button data-datepicker-target="toggle"&gt;...icon...&lt;/button&gt;
+&lt;/div&gt;
+        </code></pre>
+        <div class="columns">
+          <div class="column">
+            <div data-controller="datepicker">
+              <label for="default-no-date">Choose a date:</label>
+              <div class="form-input">
+                <input data-datepicker-target="input" type="text" name="foo" id="default-no-date"/>
+                <button data-datepicker-target="toggle">
+                  <svg><use href="#calendar-icon"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <p>The default format is <span class="format">%Y-%m-%d</span>, e.g. 2022-02-28.</p>
+          </div>
+        </div>
+      </section>
+
+
+      <section>
+        <h2>Default, date given initially</h2>
+        <pre><code class="language-html">
+&lt;div data-controller="datepicker"&gt;
+  &lt;input data-datepicker-target="input" type="text" name="foo" value="2022-06-05"/&gt;
+  &lt;button data-datepicker-target="toggle"&gt;...icon...&lt;/button&gt;
+&lt;/div&gt;
+        </code></pre>
+        <div class="columns">
+          <div class="column">
+            <div data-controller="datepicker">
+              <label for="default-with-date">Choose a date:</label>
+              <div class="form-input">
+                <input data-datepicker-target="input" type="text" name="foo" id="default-with-date" value="2022-06-05"/>
+                <button data-datepicker-target="toggle">
+                  <svg><use href="#calendar-icon"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <p>The initial date here is 2022-06-05.</p>
+          </div>
+        </div>
+      </section>
+
+
+      <section>
+        <h2>Custom format</h2>
+        <pre><code class="language-html">
+&lt;div data-controller="datepicker" data-datepicker-format-value="%-d %b %y"&gt;
+  &lt;input data-datepicker-target="input" type="text" name="foo" value="2022-08-05"/&gt;
+  &lt;button data-datepicker-target="toggle"&gt;...icon...&lt;/button&gt;
+&lt;/div&gt;
+        </code></pre>
+        <div class="columns">
+          <div class="column">
+            <form action="#output">
+              <div data-controller="datepicker" data-datepicker-format-value="%-d %b %y">
+                <label for="custom-format">Choose a date:</label>
+                <div class="form-input">
+                  <input data-datepicker-target="input" type="text" name="foo" id="custom-format" value="2022-08-05"/>
+                  <button data-datepicker-target="toggle">
+                    <svg><use href="#calendar-icon"/></svg>
+                  </button>
+                </div>
+              </div>
+              <input type="submit" value="Submit date">
+              <p id="output">Click &uarr; to see the date submitted.</p>
+            </form>
+          </div>
+          <div class="column">
+            <p>The initial date is 2022-08-05. The custom format here is <span class="format">%-d %b %y</span>.  You can use any <a href="https://github.com/airblade/stimulus-datepicker#configuration">relevant strftime directive</a>.</p>
+          </div>
+        </div>
+        <script>
+          const vals = new URL(location.href).searchParams.getAll('foo');
+          if (vals.length > 0) document.querySelector('#output').textContent = `Date submitted: ${vals.pop()}`;
+          document.querySelector('#custom-format').addEventListener('input', () => document.querySelector('#output').textContent = '');
+        </script>
+      </section>
+    </div>
+  </body>
+</html>
