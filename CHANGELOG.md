@@ -3,6 +3,9 @@
 
 ## Unreleased
 
+
+## v0.0.5 (6 May 2022)
+
 * Trigger change event on input target when date picked.
 * Fix adding of keydown handler to non-button toggle target.
 
