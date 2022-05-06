@@ -112,3 +112,11 @@ Cypress.Commands.add("assertLastDate", (value) => {
 Cypress.Commands.add("assertTargetAttribute", (target, name, value) => {
   cy.get(`[data-datepicker-target="${target}"]`).should('have.attr', name, value)
 })
+
+Cypress.Commands.add("listen", (target, eventName) => {
+  cy.get(`[data-datepicker-target="${target}"]`).invoke('on', eventName, cy.stub().as(eventName))
+})
+
+Cypress.Commands.add("assertEvent", (eventName) => {
+  cy.get(`@${eventName}`).should('have.been.calledOnce')
+})

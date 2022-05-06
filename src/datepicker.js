@@ -274,6 +274,9 @@ export default class Datepicker extends Controller {
     this.close(true)
     this.toggleTarget.focus()
     this.dateValue = dateStr
+    // Trigger change event on input when user selects date from picker.
+    // http://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event
+    this.inputTarget.dispatchEvent(new Event('change'))
   }
 
   // Focuses the given date in the calendar.
