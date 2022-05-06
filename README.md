@@ -6,6 +6,8 @@ This is a Stimulus-powered datepicker which:
 - presents a calendar closely adhering to the [WAI-ARIA date picker dialog](https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/datepicker-dialog.html) design pattern;
 - sends the date back to the server in ISO8601 format (YYYY-MM-DD).
 
+Please see the [demo page](https://airblade.github.io/stimulus-datepicker/) for a few simple examples.
+
 Your server produces an ISO8601 date; your user interacts with it in the format you configured and/or via the popup calendar; the form sends the date back to the server in ISO format.
 
 Month and day names are generated in the user's locale.
