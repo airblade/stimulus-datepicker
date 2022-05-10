@@ -161,9 +161,21 @@ export default class Datepicker extends Controller {
             </div>
           </div>
           <div class="sdp-nav-buttons">
-            <button class="sdp-goto-prev"  data-datepicker-target="prevMonth" data-action="datepicker#prevMonth" title="Previous month" aria-label="Previous month"></button>
-            <button class="sdp-goto-today" data-datepicker-target="today"     data-action="datepicker#today"     title="Today"          aria-label="Today"></button>
-            <button class="sdp-goto-next"  data-datepicker-target="nextMonth" data-action="datepicker#nextMonth" title="Next month"     aria-label="Next month"></button>
+            <button class="sdp-goto-prev"  data-datepicker-target="prevMonth" data-action="datepicker#prevMonth" title="Previous month" aria-label="Previous month">
+              <svg viewBox="0 0 10 10">
+                <polyline points="7,1 3,5 7,9" />
+              </svg>
+            </button>
+            <button class="sdp-goto-today" data-datepicker-target="today" data-action="datepicker#today" title="Today" aria-label="Today">
+              <svg viewBox="0 0 10 10">
+                <circle cx="5" cy="5" r="4" />
+              </svg>
+            </button>
+            <button class="sdp-goto-next" data-datepicker-target="nextMonth" data-action="datepicker#nextMonth" title="Next month" aria-label="Next month">
+              <svg viewBox="0 0 10 10">
+                <polyline points="3,1 7,5 3,9" />
+              </svg>
+            </button>
           </div>
         </div>
         <div class="sdp-days-of-week">

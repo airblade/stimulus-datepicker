@@ -3,6 +3,8 @@
 
 ## Unreleased
 
+* Use SVG for navigation buttons.
+
 
 ## v0.0.5 (6 May 2022)
 
