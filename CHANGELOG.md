@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+* Add hover to navigation buttons.
 * Use SVG for navigation buttons.
 
 

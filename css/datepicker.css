@@ -104,6 +104,9 @@
   background-color: #f5f5f5;
   cursor: pointer;
 }
+.sdp-nav-buttons button:hover {
+  background-color: #eee;
+}
 .sdp-nav-buttons svg {
   fill: none;
   stroke: currentColor;
