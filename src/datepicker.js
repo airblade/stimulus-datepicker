@@ -189,6 +189,27 @@ export default class Datepicker extends Controller {
     this.element.insertAdjacentHTML('beforeend', cal)
   }
 
+  monthTargetConnected() {
+    this.autoSizeSelect(this.monthTarget)
+  }
+
+  yearTargetConnected() {
+    this.autoSizeSelect(this.yearTarget)
+  }
+
+  // Set select's width to the width of the selected option.
+  autoSizeSelect(select) {
+    const tempSelect = document.createElement('select')
+    const tempOption = document.createElement('option')
+    tempOption.textContent = select.options[select.selectedIndex].text
+    tempSelect.style.cssText += 'visibility: hidden; position: fixed;'
+    tempSelect.appendChild(tempOption)
+    select.after(tempSelect)
+    const tempSelectWidth = tempSelect.getBoundingClientRect().width
+    select.style.width = `${tempSelectWidth}px`
+    tempSelect.remove()
+  }
+
   pick(event) {
     event.preventDefault()
     const dateStr = event.target.hasAttribute('datetime')

@@ -69,6 +69,7 @@
   -moz-appearance: none;
   -webkit-appearance: none;
   background: white;
+  padding: 1px;
   border: 1px solid transparent;
   font-size: 1.1em;
   font-weight: 500;
@@ -80,7 +81,7 @@
   align-items: center;
 }
 .sdp-nav-dropdowns > div:first-child {
-  margin-right: 0.5em;
+  margin-right: 0.4em;
 }
 .sdp-nav-dropdowns > div::after {
   content: " ";
@@ -90,7 +91,7 @@
   width: 0.3em;
   height: 0.3em;
   transform: rotate(-45deg);
-  margin-left: 4px;
+  margin-left: 2px;
 }
 .sdp-nav-buttons button {
   display: flex;

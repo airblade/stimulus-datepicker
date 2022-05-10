@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+* Auto-size <select>s to selected option.
 * Add hover to navigation buttons.
 * Use SVG for navigation buttons.
 
