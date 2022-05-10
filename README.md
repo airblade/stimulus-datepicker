@@ -18,7 +18,7 @@ The calendar is minimally styled so you can easily adjust its appearance with a 
 
 Size: JS 3.6kB minified and gzipped, CSS 2.7kB gzipped.
 
-<img src="https://github.com/airblade/stimulus-datepicker/raw/main/screenshot.png" width="325px">
+<img src="https://github.com/airblade/stimulus-datepicker/raw/main/screenshot.png" width="592px">
 
 
 ## Installation
