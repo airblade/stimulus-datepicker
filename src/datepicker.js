@@ -161,7 +161,7 @@ export default class Datepicker extends Controller {
             </div>
           </div>
           <div class="sdp-nav-buttons">
-            <button class="sdp-goto-prev"  data-datepicker-target="prevMonth" data-action="datepicker#prevMonth" title="Previous month" aria-label="Previous month">
+            <button class="sdp-goto-prev" data-datepicker-target="prevMonth" data-action="datepicker#prevMonth" title="Previous month" aria-label="Previous month">
               <svg viewBox="0 0 10 10">
                 <polyline points="7,1 3,5 7,9" />
               </svg>
