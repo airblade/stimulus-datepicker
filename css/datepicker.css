@@ -104,14 +104,14 @@
   background-color: #f5f5f5;
   cursor: pointer;
 }
-.sdp-nav-buttons button svg {
+.sdp-nav-buttons svg {
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
   width: 0.75em;
   height: 0.75em;
 }
-.sdp-nav-buttons .sdp-goto-today {
+.sdp-goto-today {
   margin-left: 0.3em;
   margin-right: 0.3em;
 }
