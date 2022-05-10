@@ -68,8 +68,7 @@
         border: 1px solid currentColor;
         padding: 10px;
         border-radius: 3px;
-        min-width: 10em;
-        width: 100%;
+        width: 12em;
       }
       input[type="submit"] {
         width: auto;
@@ -102,18 +101,26 @@
         padding: 1px 6px;
       }
       .columns {
-        display: flex;
-        justify-content: space-between;
+        display: block;
       }
-      .column {
-        width: 50%;
-      }
-      .column + .column {
-        padding-top: 1.5em;
+      .explanation {
         color: #888888;
         font-size: 0.9em;
         line-height: 1.5;
+        margin: 1.3em 0;
       }
+      @media screen and (min-width: 769px) {
+        .columns {
+          display: flex;
+          flex-direction: row-reverse;
+        }
+        .explanation {
+          margin: 0;
+          padding-top: 1.5em;
+          flex-grow: 2;
+        }
+      }
+
     </style>
   </head>
   <body>
@@ -150,6 +157,9 @@
 &lt;/div&gt;
         </code></pre>
         <div class="columns">
+          <div class="column explanation">
+            <p>The default format is <span class="format">%Y-%m-%d</span>, e.g. 2022-02-28.</p>
+          </div>
           <div class="column">
             <div data-controller="datepicker">
               <label for="default-no-date">Choose a date:</label>
@@ -160,9 +170,6 @@
                 </button>
               </div>
             </div>
-          </div>
-          <div class="column">
-            <p>The default format is <span class="format">%Y-%m-%d</span>, e.g. 2022-02-28.</p>
           </div>
         </div>
       </section>
@@ -177,6 +184,9 @@
 &lt;/div&gt;
         </code></pre>
         <div class="columns">
+          <div class="column explanation">
+            <p>The initial date here is 2022-06-05.</p>
+          </div>
           <div class="column">
             <div data-controller="datepicker">
               <label for="default-with-date">Choose a date:</label>
@@ -187,9 +197,6 @@
                 </button>
               </div>
             </div>
-          </div>
-          <div class="column">
-            <p>The initial date here is 2022-06-05.</p>
           </div>
         </div>
       </section>
@@ -204,6 +211,9 @@
 &lt;/div&gt;
         </code></pre>
         <div class="columns">
+          <div class="column explanation">
+            <p>The initial date is 2022-08-05. The custom format here is <span class="format">%-d %b %y</span>.  You can use any <a href="https://github.com/airblade/stimulus-datepicker#configuration">relevant strftime directive</a>.</p>
+          </div>
           <div class="column">
             <form action="#output">
               <div data-controller="datepicker" data-datepicker-format-value="%-d %b %y">
@@ -218,9 +228,6 @@
               <input type="submit" value="Submit date">
               <p id="output">Click &uarr; to see how the date is submitted.</p>
             </form>
-          </div>
-          <div class="column">
-            <p>The initial date is 2022-08-05. The custom format here is <span class="format">%-d %b %y</span>.  You can use any <a href="https://github.com/airblade/stimulus-datepicker#configuration">relevant strftime directive</a>.</p>
           </div>
         </div>
         <script>
