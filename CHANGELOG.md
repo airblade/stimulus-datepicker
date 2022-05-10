@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+* Fix color of <select>s and current-month days in iOS Safari.
 * Auto-size <select>s to selected option.
 * Add hover to navigation buttons.
 * Use SVG for navigation buttons.

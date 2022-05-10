@@ -69,6 +69,7 @@
   -moz-appearance: none;
   -webkit-appearance: none;
   background: white;
+  color: currentColor;
   padding: 1px;
   border: 1px solid transparent;
   font-size: 1.1em;
@@ -141,6 +142,7 @@
   height: 4.5ch;
   border-radius: 50%;
   background-color: transparent;
+  color: currentColor;
   cursor: pointer;
 }
 .sdp-days button.sdp-selected {
