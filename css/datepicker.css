@@ -70,19 +70,15 @@
   -webkit-appearance: none;
   background: white;
   color: currentColor;
-  padding: 1px;
+  padding: 1px 12px 1px 1px;
   border: 1px solid transparent;
   font-size: 1.1em;
   font-weight: 500;
   cursor: pointer;
 }
 .sdp-nav-dropdowns > div {
-  padding-right: 4px;
   display: flex;
   align-items: center;
-}
-.sdp-nav-dropdowns > div:first-child {
-  margin-right: 0.4em;
 }
 .sdp-nav-dropdowns > div::after {
   content: " ";
@@ -92,7 +88,8 @@
   width: 0.3em;
   height: 0.3em;
   transform: rotate(-45deg);
-  margin-left: 2px;
+  right: 10px;
+  position: relative;
 }
 .sdp-nav-buttons button {
   display: flex;

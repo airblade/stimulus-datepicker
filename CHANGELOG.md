@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+* Make dropdown arrows clickable.
 * Fix color of selects and current-month days in iOS Safari.
 * Auto-size selects to selected option.
 * Add hover to navigation buttons.
