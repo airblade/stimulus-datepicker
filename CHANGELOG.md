@@ -3,8 +3,8 @@
 
 ## Unreleased
 
-* Fix color of <select>s and current-month days in iOS Safari.
-* Auto-size <select>s to selected option.
+* Fix color of selects and current-month days in iOS Safari.
+* Auto-size selects to selected option.
 * Add hover to navigation buttons.
 * Use SVG for navigation buttons.
 
@@ -20,12 +20,12 @@
 * Size arrows in em rather than px.
 * Improve dates' hover and focus styles.
 * Improve navigation buttons' appearance.
-* Make <select> appearance on Safari consistent with Chrome and Firefox.
+* Make select appearance on Safari consistent with Chrome and Firefox.
 
 
 ## v0.0.3 (3 May 2022)
 
-* Fix <select> background on Firefox.
+* Fix select background on Firefox.
 * Ensure navigation buttons' content is centered.
 * Ensure calendar renders over other elements.
 * Scope tests to datepicker.
