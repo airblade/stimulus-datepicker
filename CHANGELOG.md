@@ -3,6 +3,9 @@
 
 ## Unreleased
 
+
+## v0.0.6 (10 May 2022)
+
 * Make dropdown arrows clickable.
 * Fix color of selects and current-month days in iOS Safari.
 * Auto-size selects to selected option.
