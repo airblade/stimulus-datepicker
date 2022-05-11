@@ -256,4 +256,22 @@ describe('Stimulus datepicker', () => {
     cy.focused().should('not.have.attr', 'aria-selected', 'true')
     cy.assertTargetAttribute('toggle', 'aria-label', 'Change Date, 2022-04-08')
   })
+
+
+  it('supports min and max dates', () => {
+    cy.setRange('2022-03-30', '2022-04-10')
+    cy.showCalendar()
+
+    cy.focusDate('2022-03-31')
+    cy.focused().type('{leftArrow}')
+    cy.assertFocusedDate('2022-03-30')
+    cy.focused().type('{leftArrow}')
+    cy.assertFocusedDate('2022-03-30')
+
+    cy.focusDate('2022-04-09')
+    cy.focused().type('{rightArrow}')
+    cy.assertFocusedDate('2022-04-10')
+    cy.focused().type('{rightArrow}')
+    cy.assertFocusedDate('2022-04-10')
+  })
 })

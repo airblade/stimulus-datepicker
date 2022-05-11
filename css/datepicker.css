@@ -139,6 +139,8 @@
   height: 4.5ch;
   border-radius: 50%;
   background-color: transparent;
+}
+.sdp-days button:enabled {
   color: currentColor;
   cursor: pointer;
 }
@@ -170,7 +172,7 @@
   outline: none;
   border: 2px solid var(--sdp-color);
 }
-.sdp-days button.sdp-prev-month,
-.sdp-days button.sdp-next-month {
+.sdp-days button.sdp-prev-month:enabled,
+.sdp-days button.sdp-next-month:enabled {
   color: #888;
 }

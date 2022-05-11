@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+* Support min and max dates.
 * Improve alignment of day buttons on mobile.
 
 

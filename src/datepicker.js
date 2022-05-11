@@ -8,6 +8,8 @@ export default class Datepicker extends Controller {
 
   static values = {
     date:              String,
+    min:               String,
+    max:               String,
     format:            {type: String, default: '%Y-%m-%d'},
     firstDayOfWeek:    {type: Number, default: 1},
     dayNameLength:     {type: Number, default: 2},
@@ -86,12 +88,34 @@ export default class Datepicker extends Controller {
   }
 
   // @param dateStr [String] (YYYY-MM-DD) the date to focus on.
-  //   If not given, the date from the input is used.
-  //   If that's empty, today is used.
-  open(animate, dateStr) {
-    const d = dateStr || (this.dateValue != '' ? this.dateValue : this.todayStr())
-    this.render(d)
-    this.focusDate(d)
+  open(animate, dateStr = this.initialDateStr()) {
+    this.render(dateStr)
+    this.focusDate(dateStr)
+  }
+
+  // Returns the date to focus on initially.  This is `dateValue` if given
+  // or today.  Whichever is used, it is clamped to `minValue` and/or `maxValue`
+  // dates if given.
+  initialDateStr() {
+    return this.clamp(this.dateValue || this.todayStr())
+  }
+
+  clamp(dateStr) {
+    return this.rangeUnderflow(dateStr) ? this.minValue
+         : this.rangeOverflow(dateStr)  ? this.maxValue
+         : dateStr
+  }
+
+  rangeUnderflow(dateStr) {
+    return this.hasMinValue && dateStr < this.minValue
+  }
+
+  rangeOverflow(dateStr) {
+    return this.hasMaxValue && dateStr > this.maxValue
+  }
+
+  isOutOfRange(dateStr) {
+    return this.rangeUnderflow(dateStr) || this.rangeOverflow(dateStr)
   }
 
   closeOnOutsideClick(event) {
@@ -212,9 +236,9 @@ export default class Datepicker extends Controller {
 
   pick(event) {
     event.preventDefault()
-    const dateStr = event.target.hasAttribute('datetime')
-      ? event.target.getAttribute('datetime')
-      : event.target.querySelector('time').getAttribute('datetime')
+    // event.target is <time>
+    if (event.target.parentElement.disabled) return
+    const dateStr = event.target.getAttribute('datetime')
     this.selectDate(dateStr)
   }
 
@@ -240,12 +264,12 @@ export default class Datepicker extends Controller {
 
     if (!this.daysTarget.contains(event.target)) return
 
+    // event.target is <button>
     const dateStr = event.target.querySelector('time').getAttribute('datetime')
 
     switch (event.key) {
       case 'Enter':
       case ' ':
-        event.preventDefault()
         this.selectDate(dateStr)
         break
       case 'ArrowUp':
@@ -329,6 +353,8 @@ export default class Datepicker extends Controller {
       this.focusDate(dateStr)
       return
     }
+
+    if (time.parentElement.disabled) return
 
     const currentFocus = this.daysTarget.querySelector('button[tabindex="0"]')
     if (currentFocus) currentFocus.setAttribute('tabindex', -1)
@@ -504,10 +530,15 @@ export default class Datepicker extends Controller {
     if (dayOfWeekOffset > 0) {
       date.setDate(1 - dayOfWeekOffset)
       for (let month = date.getMonth(); date.getMonth() == month; date.setDate(date.getDate() + 1)) {
+        const ds = this.toLocalISOString(date)
         const klass = this.classAttribute('sdp-prev-month', (this.isToday(date) ? 'sdp-today' : ''))
         days.push(`
-          <button ${klass} tabindex="-1">
-            <time datetime="${this.toLocalISOString(date)}">${date.getDate()}</time>
+          <button type="button"
+                  tabindex="-1"
+                  ${klass}
+                  ${this.isOutOfRange(ds) ? 'aria-disabled="true" disabled' : ''}
+          >
+            <time datetime="${ds}">${date.getDate()}</time>
           </button>
         `)
       }
@@ -521,7 +552,12 @@ export default class Datepicker extends Controller {
         ds == this.dateValue ? 'sdp-selected' : ''
       )
       days.push(`
-        <button ${klass} tabindex="-1" ${ds == this.dateValue ? 'aria-selected="true"' : ''}>
+        <button type="button"
+                tabindex="-1"
+                ${klass}
+                ${ds == this.dateValue ? 'aria-selected="true"' : ''}
+                ${this.isOutOfRange(ds) ? 'aria-disabled="true" disabled' : ''}
+        >
           <time datetime="${ds}">${date.getDate()}</time>
         </button>
       `)
@@ -529,10 +565,15 @@ export default class Datepicker extends Controller {
 
     // Next month
     for (let unfilled = (7 - (days.length % 7)) % 7; date.getDate() <= unfilled; date.setDate(date.getDate() + 1)) {
+      const ds = this.toLocalISOString(date)
       const klass = this.classAttribute('sdp-next-month', (this.isToday(date) ? 'sdp-today' : ''))
       days.push(`
-        <button ${klass} tabindex="-1">
-          <time datetime="${this.toLocalISOString(date)}">${date.getDate()}</time>
+        <button type="button"
+                tabindex="-1"
+                ${klass}
+                ${this.isOutOfRange(ds) ? 'aria-disabled="true" disabled' : ''}
+        >
+          <time datetime="${ds}">${date.getDate()}</time>
         </button>
       `)
     }

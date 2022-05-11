@@ -170,4 +170,56 @@ describe('Stimulus datepicker', () => {
     assert.equal(controller.nextMonthAbsolute('2022-03-31'), '2022-04-30')
   })
 
+  it('rangeUnderflow', () => {
+    controller.hasMinValue = false  // This needs explicitly setting
+    assert.isFalse(controller.rangeUnderflow('2022-05-11'))
+
+    controller.minValue = '2022-05-11'
+    controller.hasMinValue = true  // This needs explicitly setting
+    assert.isFalse(controller.rangeUnderflow('2022-05-11'))
+    assert.isTrue(controller.rangeUnderflow('2022-05-10'))
+  })
+
+  it('rangeOverflow', () => {
+    controller.hasMaxValue = false  // This needs explicitly setting
+    assert.isFalse(controller.rangeOverflow('2022-05-11'))
+
+    controller.maxValue = '2022-05-11'
+    controller.hasMaxValue = true  // This needs explicitly setting
+    assert.isFalse(controller.rangeOverflow('2022-05-11'))
+    assert.isTrue(controller.rangeOverflow('2022-05-12'))
+  })
+
+  it('clamp', () => {
+    controller.hasMinValue = false  // This needs explicitly setting
+    controller.hasMaxValue = false  // This needs explicitly setting
+    assert.equal(controller.clamp('2022-05-11'), '2022-05-11')
+
+    controller.minValue = '2022-05-11'
+    controller.hasMinValue = true  // This needs explicitly setting
+    assert.equal(controller.clamp('2022-05-11'), '2022-05-11')
+    assert.equal(controller.clamp('2022-05-10'), '2022-05-11')
+
+    controller.maxValue = '2022-05-20'
+    controller.hasMaxValue = true  // This needs explicitly setting
+    assert.equal(controller.clamp('2022-05-20'), '2022-05-20')
+    assert.equal(controller.clamp('2022-05-21'), '2022-05-20')
+  })
+
+  it('initialDateStr', () => {
+    controller.hasMinValue = false  // This needs explicitly setting
+    controller.hasMaxValue = false  // This needs explicitly setting
+
+    controller.dateValue = '2022-04-01'
+    assert.equal(controller.initialDateStr(), '2022-04-01')
+
+    controller.dateValue = undefined
+    const date = new Date()
+    const todayStr = [
+      date.getFullYear(),
+      (date.getMonth() + 1).toString().padStart(2, '0'),
+      date.getDate().toString().padStart(2, '0')
+    ].join('-')
+    assert.equal(controller.initialDateStr(), todayStr)
+  })
 })

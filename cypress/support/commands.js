@@ -24,6 +24,14 @@ Cypress.Commands.add("setFormat", (format) => {
     })
 })
 
+Cypress.Commands.add("setRange", (min, max) => {
+  cy.get(controller)
+    .then(els => {
+      if (min) els[0].setAttribute('data-datepicker-min-value', min)
+      if (max) els[0].setAttribute('data-datepicker-max-value', max)
+    })
+})
+
 Cypress.Commands.add("assertVisibleInput", (value) => {
   cy.get(visibleInput).should('have.value', value)
 })

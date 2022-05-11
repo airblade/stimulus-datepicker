@@ -69,6 +69,8 @@ You can configure your datepicker with the following attributes.  Declare them o
 | `first-day-of-week` | `1` | First day of the week in the calendar (Sunday is `0`). |
 | `day-name-length` | `2` | Length of the abbreviated day names in the calendar, e.g. "Mo". |
 | `jump` | `"absolute"` | When jumping to the previous/next month, whether to go to the same date (`"absolute"`) or the same day of the week (`"relative"`). |
+| `min` | `""` | The earliest choosable date (YYYY-MM-DD).  This only applies to the calendar, not the text input. |
+| `max` | `""` | The latest choosable date (YYYY-MM-DD).  This only applies to the calendar, not the text input. |
 
 You can use the following strftime directives in `data-datepicker-format-value`:
 
