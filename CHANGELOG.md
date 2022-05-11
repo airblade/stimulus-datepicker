@@ -3,6 +3,8 @@
 
 ## Unreleased
 
+* Improve alignment of day buttons on mobile.
+
 
 ## v0.0.6 (10 May 2022)
 
