@@ -6,14 +6,14 @@ describe('Stimulus datepicker', () => {
 
   it('isLeapYear', () => {
     assert.isFalse(controller.isLeapYear(2022))
-    assert(controller.isLeapYear(2024))
-    assert(controller.isLeapYear(2000))
+    assert.isTrue(controller.isLeapYear(2024))
+    assert.isTrue(controller.isLeapYear(2000))
     assert.isFalse(controller.isLeapYear(2100))
   })
 
   it('isValidDate', () => {
     // year
-    assert(controller.isValidDate(2000, 1, 1))
+    assert.isTrue(controller.isValidDate(2000, 1, 1))
     assert.isFalse(controller.isValidDate(1999, 1, 1))
     assert.isFalse(controller.isValidDate(3000, 1, 1))
 
@@ -36,15 +36,15 @@ describe('Stimulus datepicker', () => {
     assert.isFalse(controller.isValidDate(2022, 11, 31))
     assert.isFalse(controller.isValidDate(2022, 12, 32))
 
-    assert(controller.isValidDate(2022, 2, 28))
+    assert.isTrue(controller.isValidDate(2022, 2, 28))
     assert.isFalse(controller.isValidDate(2022, 2, 29))
-    assert(controller.isValidDate(2024, 2, 29))
+    assert.isTrue(controller.isValidDate(2024, 2, 29))
     assert.isFalse(controller.isValidDate(2024, 2, 30))
   })
 
   it('isValidISO8601Date', () => {
-    assert(controller.isValidISO8601Date('2022-03-25'))
-    assert(controller.isValidISO8601Date('2022-04-29'))
+    assert.isTrue(controller.isValidISO8601Date('2022-03-25'))
+    assert.isTrue(controller.isValidISO8601Date('2022-04-29'))
     assert.isFalse(controller.isValidISO8601Date('2022-3-25'))
     assert.isFalse(controller.isValidISO8601Date('20220325'))
     assert.isFalse(controller.isValidISO8601Date('2022 03 25'))
