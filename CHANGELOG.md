@@ -3,6 +3,9 @@
 
 ## Unreleased
 
+
+## v0.0.7 (12 May 2022)
+
 * Allow any 4-digit year.
 * Add opt-in client-side validation of min, max dates.
 * Support min and max dates.
