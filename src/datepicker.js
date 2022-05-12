@@ -754,7 +754,7 @@ export default class Datepicker extends Controller {
   // @param month [Number] month number (January is 1)
   // @param day [Number] day in month
   isValidDate(year, month, day) {
-    if (year  < 2000 || year  > 2999) return false
+    if (year  < 1000 || year  > 9999) return false
     if (month <    1 || month >   12) return false
     if (day   <    1 || day   > this.daysInMonth(month, year)) return false
     return true

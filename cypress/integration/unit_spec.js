@@ -14,8 +14,8 @@ describe('Stimulus datepicker', () => {
   it('isValidDate', () => {
     // year
     assert.isTrue(controller.isValidDate(2000, 1, 1))
-    assert.isFalse(controller.isValidDate(1999, 1, 1))
-    assert.isFalse(controller.isValidDate(3000, 1, 1))
+    assert.isFalse(controller.isValidDate(999, 1, 1))
+    assert.isFalse(controller.isValidDate(10000, 1, 1))
 
     // month
     assert.isFalse(controller.isValidDate(2022, 0, 1))

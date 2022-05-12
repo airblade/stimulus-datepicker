@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+* Allow any 4-digit year.
 * Add opt-in client-side validation of min, max dates.
 * Support min and max dates.
 * Improve alignment of day buttons on mobile.
