@@ -259,7 +259,8 @@ describe('Stimulus datepicker', () => {
 
 
   it('supports min and max dates', () => {
-    cy.setRange('2022-03-30', '2022-04-10')
+    cy.setControllerValue('min', '2022-03-30')
+    cy.setControllerValue('max', '2022-04-10')
     cy.showCalendar()
 
     cy.focusDate('2022-03-31')
@@ -273,5 +274,24 @@ describe('Stimulus datepicker', () => {
     cy.assertFocusedDate('2022-04-10')
     cy.focused().type('{rightArrow}')
     cy.assertFocusedDate('2022-04-10')
+  })
+
+
+  it('validates', () => {
+    cy.setFormat('%d %b %Y')
+    cy.setControllerValue('min', '2022-03-30')
+    cy.setControllerValue('max', '2022-04-10')
+    cy.setControllerValue('underflow-message', 'Date must be %s or later.')
+    cy.setControllerValue('overflow-message', 'Date must be %s or earlier.')
+    cy.showCalendar()
+
+    cy.typeDate('20 Mar 2022')
+    cy.assertValidationMessage('Date must be 30 Mar 2022 or later.')
+
+    cy.typeDate('01 Apr 2022')
+    cy.assertValidationMessage('')
+
+    cy.typeDate('20 Apr 2022')
+    cy.assertValidationMessage('Date must be 10 Apr 2022 or earlier.')
   })
 })

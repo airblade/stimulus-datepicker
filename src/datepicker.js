@@ -13,7 +13,9 @@ export default class Datepicker extends Controller {
     format:            {type: String, default: '%Y-%m-%d'},
     firstDayOfWeek:    {type: Number, default: 1},
     dayNameLength:     {type: Number, default: 2},
-    jump:              {type: String, default: 'absolute'}
+    jump:              {type: String, default: 'absolute'},
+    underflowMessage:  String,
+    overflowMessage:   String
   }
 
   connect() {
@@ -28,6 +30,27 @@ export default class Datepicker extends Controller {
     if (!this.hasHiddenTarget) return
     this.hiddenTarget.value = value
     this.inputTarget.value = this.format(value)
+    this.validate(value)
+  }
+
+  validate(dateStr) {
+    const message = this.validationMessage(dateStr)
+    this.inputTarget.setCustomValidity(message)
+    if (message) this.inputTarget.reportValidity()
+  }
+
+  validationMessage(dateStr) {
+    return this.rangeUnderflow(dateStr) ? this.underflowMessage()
+         : this.rangeOverflow(dateStr)  ? this.overflowMessage()
+         : ''
+  }
+
+  underflowMessage() {
+    return this.underflowMessageValue.replace('%s', this.format(this.minValue))
+  }
+
+  overflowMessage() {
+    return this.overflowMessageValue.replace('%s', this.format(this.maxValue))
   }
 
   addHiddenInput() {

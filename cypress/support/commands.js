@@ -24,12 +24,9 @@ Cypress.Commands.add("setFormat", (format) => {
     })
 })
 
-Cypress.Commands.add("setRange", (min, max) => {
+Cypress.Commands.add("setControllerValue", (name, value) => {
   cy.get(controller)
-    .then(els => {
-      if (min) els[0].setAttribute('data-datepicker-min-value', min)
-      if (max) els[0].setAttribute('data-datepicker-max-value', max)
-    })
+    .then(el => el[0].setAttribute(`data-datepicker-${name}-value`, value))
 })
 
 Cypress.Commands.add("assertVisibleInput", (value) => {
@@ -41,7 +38,9 @@ Cypress.Commands.add("assertHiddenInput", (value) => {
 })
 
 Cypress.Commands.add("typeDate", (value) => {
-  cy.get(visibleInput).clear().type(value)
+  // Not sure why we need to call clear() twice but evidently
+  // it is necessary when Cypress runs on Firefox and Electron.
+  cy.get(visibleInput).clear().clear().type(value)
 })
 
 Cypress.Commands.add("showCalendar", (value) => {
@@ -125,4 +124,8 @@ Cypress.Commands.add("listen", (target, eventName) => {
 
 Cypress.Commands.add("assertEvent", (eventName) => {
   cy.get(`@${eventName}`).should('have.been.calledOnce')
+})
+
+Cypress.Commands.add("assertValidationMessage", (message) => {
+  cy.get(visibleInput).invoke('prop', 'validationMessage').should('equal', message)
 })

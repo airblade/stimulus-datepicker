@@ -19,6 +19,7 @@
 
       const application = Application.start()
       application.register('datepicker', Datepicker)
+      window.Stimulus = application
     </script>
     <style>
       body {
@@ -35,6 +36,9 @@
         border-width: 1px;
         padding: 5px;
         border-radius: 3px;
+      }
+      input:invalid {
+        border-color: red;
       }
     </style>
   </head>

@@ -222,4 +222,26 @@ describe('Stimulus datepicker', () => {
     ].join('-')
     assert.equal(controller.initialDateStr(), todayStr)
   })
+
+  it('validationMessage', () => {
+    controller.hasMinValue = false
+    controller.hasMaxValue = false
+    controller.underflowMessageValue = 'Date must be %s or later.'
+    controller.overflowMessageValue = 'Date must be %s or earlier.'
+    controller.formatValue = '%d %m %Y'
+
+    assert.equal(controller.validationMessage('2022-05-11'), '')
+
+    controller.minValue = '2022-05-20'
+    controller.hasMinValue = true  // This needs explicitly setting
+    assert.equal(controller.validationMessage('2022-05-15'), 'Date must be 20 05 2022 or later.')
+    controller.underflowMessageValue = ''
+    assert.equal(controller.validationMessage('2022-05-15'), '')
+
+    controller.maxValue = '2022-05-25'
+    controller.hasMaxValue = true  // This needs explicitly setting
+    assert.equal(controller.validationMessage('2022-05-30'), 'Date must be 25 05 2022 or earlier.')
+    controller.overflowMessageValue = ''
+    assert.equal(controller.validationMessage('2022-05-30'), '')
+  })
 })
