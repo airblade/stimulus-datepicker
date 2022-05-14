@@ -1,7 +1,9 @@
 :root {
   --sdp-color: #005fcc;
   --sdp-invert-color: #fff;
-  --sdp-shadow-color: 0deg 0% 50%
+  --sdp-shadow-color: 0deg 0% 50%;
+  --sdp-disabled: #1010104d;
+  --sdp-disabled-invert: #fff;
 }
 
 @keyframes fadeIn {
@@ -140,17 +142,30 @@
   border-radius: 50%;
   background-color: transparent;
 }
-.sdp-days button:enabled {
+.sdp-days button:not([aria-disabled]) {
   color: currentColor;
   cursor: pointer;
 }
-.sdp-days button.sdp-selected {
+.sdp-days button[aria-disabled] {
+  color: var(--sdp-disabled);
+}
+
+.sdp-days button:not([aria-disabled]).sdp-selected {
   background-color: var(--sdp-color);
   color: var(--sdp-invert-color);
 }
-.sdp-days button.sdp-today {
+.sdp-days button[aria-disabled].sdp-selected {
+  background-color: var(--sdp-disabled);
+  color: var(--sdp-disabled-invert);
+}
+
+.sdp-days button:not([aria-disabled]).sdp-today {
   border: 1px solid var(--sdp-color);
 }
+.sdp-days button[aria-disabled].sdp-today {
+  border: 1px solid var(--sdp-disabled);
+}
+
 /* Ideally we would use outline and outline-offset for the :hover and :focus
  * styles.  But Safari's outline doesn't follow the border-radius; it is square.
  * https://bugs.webkit.org/show_bug.cgi?id=231433
@@ -159,20 +174,42 @@
 .sdp-days button:hover,
 .sdp-days button:focus {
   outline: none;
+}
+
+.sdp-days button:not([aria-disabled]):hover,
+.sdp-days button:not([aria-disabled]):focus {
   border: 2px solid var(--sdp-color);
 }
-.sdp-days button.sdp-selected:hover,
-.sdp-days button.sdp-selected:focus {
-  outline: none;
+.sdp-days button[aria-disabled]:hover,
+.sdp-days button[aria-disabled]:focus {
+  border: 2px solid var(--sdp-disabled);
+}
+
+.sdp-days button:not([aria-disabled]).sdp-selected:hover,
+.sdp-days button:not([aria-disabled]).sdp-selected:focus {
   border: 2px solid var(--sdp-invert-color);
   box-shadow: 0 0 0 2px var(--sdp-color);
 }
-.sdp-days button.sdp-today:hover,
-.sdp-days button.sdp-today:focus {
-  outline: none;
+.sdp-days button[aria-disabled].sdp-selected:hover,
+.sdp-days button[aria-disabled].sdp-selected:focus {
+  border: 2px solid var(--sdp-disabled-invert);
+  box-shadow: 0 0 0 2px var(--sdp-disabled);
+}
+
+.sdp-days button:not([aria-disabled]).sdp-today:hover,
+.sdp-days button:not([aria-disabled]).sdp-today:focus {
   border: 2px solid var(--sdp-color);
 }
-.sdp-days button.sdp-prev-month:enabled,
-.sdp-days button.sdp-next-month:enabled {
+.sdp-days button[aria-disabled].sdp-today:hover,
+.sdp-days button[aria-disabled].sdp-today:focus {
+  border: 2px solid var(--sdp-disabled);
+}
+
+.sdp-days button:not([aria-disabled]).sdp-prev-month,
+.sdp-days button:not([aria-disabled]).sdp-next-month {
   color: #888;
+}
+.sdp-days button[aria-disabled].sdp-prev-month,
+.sdp-days button[aria-disabled].sdp-next-month {
+  color: var(--sdp-disabled);
 }

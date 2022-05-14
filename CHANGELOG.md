@@ -4,6 +4,7 @@
 ## Unreleased
 
 
+* Improve visual indication of dates outside min/max range.
 * Allow dates outside min/max range to be focused.
 
 
