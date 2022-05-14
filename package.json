@@ -29,14 +29,11 @@
   "devDependencies": {
     "@hotwired/stimulus": "^3.0.0",
     "cypress": "9.6.0",
-    "http-server": "^14.1.0",
-    "start-server-and-test": "^1.14.0"
+    "http-server": "^14.1.0"
   },
   "scripts": {
     "start": "http-server ./cypress/fixtures -p 3030",
-    "cy:open": "cypress open",
-    "cy:run": "cypress run",
-    "test": "start-server-and-test start http://localhost:3030 cy:run",
+    "cypress": "cypress open",
     "release": "git tag v$npm_package_version && git push && git push --tags && npm login && npm publish && echo 'Remember to update version on demo page'"
   }
 }
