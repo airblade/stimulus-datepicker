@@ -65,6 +65,10 @@ Cypress.Commands.add("assertFocusedDate", (value) => {
   cy.get(calendar).get(`button[tabindex="0"] [datetime="${value}"]`)
 })
 
+Cypress.Commands.add("assertDisabledDate", (value) => {
+  cy.get(calendar).get(`button[aria-disabled="true"] [datetime="${value}"]`)
+})
+
 Cypress.Commands.add("assertFocusedTarget", (target) => {
   cy.get(`[data-datepicker-target="${target}"]`).should('have.focus')
 })

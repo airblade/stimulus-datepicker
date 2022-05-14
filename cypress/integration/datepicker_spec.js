@@ -267,13 +267,15 @@ describe('Stimulus datepicker', () => {
     cy.focused().type('{leftArrow}')
     cy.assertFocusedDate('2022-03-30')
     cy.focused().type('{leftArrow}')
-    cy.assertFocusedDate('2022-03-30')
+    cy.assertFocusedDate('2022-03-29')
+    cy.assertDisabledDate('2022-03-29')
 
     cy.focusDate('2022-04-09')
     cy.focused().type('{rightArrow}')
     cy.assertFocusedDate('2022-04-10')
     cy.focused().type('{rightArrow}')
-    cy.assertFocusedDate('2022-04-10')
+    cy.assertFocusedDate('2022-04-11')
+    cy.assertDisabledDate('2022-04-11')
   })
 
 

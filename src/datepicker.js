@@ -259,9 +259,9 @@ export default class Datepicker extends Controller {
 
   pick(event) {
     event.preventDefault()
-    // event.target is <time>
-    if (event.target.parentElement.disabled) return
-    const dateStr = event.target.getAttribute('datetime')
+    const time = event.target
+    if (time.parentElement.hasAttribute('aria-disabled')) return
+    const dateStr = time.getAttribute('datetime')
     this.selectDate(dateStr)
   }
 
@@ -285,15 +285,16 @@ export default class Datepicker extends Controller {
         return
     }
 
-    if (!this.daysTarget.contains(event.target)) return
+    const button = event.target
+    if (!this.daysTarget.contains(button)) return
 
-    // event.target is <button>
-    const dateStr = event.target.querySelector('time').getAttribute('datetime')
+    const dateStr = button.querySelector('time').getAttribute('datetime')
 
     switch (event.key) {
       case 'Enter':
       case ' ':
-        this.selectDate(dateStr)
+        event.preventDefault()
+        if (!button.hasAttribute('aria-disabled')) this.selectDate(dateStr)
         break
       case 'ArrowUp':
       case 'k':
@@ -377,16 +378,16 @@ export default class Datepicker extends Controller {
       return
     }
 
-    if (time.parentElement.disabled) return
-
     const currentFocus = this.daysTarget.querySelector('button[tabindex="0"]')
     if (currentFocus) currentFocus.setAttribute('tabindex', -1)
 
-    const button = time.closest('button')
+    const button = time.parentElement
     button.setAttribute('tabindex', 0)
     button.focus()
 
-    this.setToggleAriaLabel(`Change Date, ${this.format(dateStr)}`)
+    if (!button.hasAttribute('aria-disabled')) {
+      this.setToggleAriaLabel(`Change Date, ${this.format(dateStr)}`)
+    }
   }
 
   adjustAndFocus(dateStr, offset) {
@@ -559,7 +560,7 @@ export default class Datepicker extends Controller {
           <button type="button"
                   tabindex="-1"
                   ${klass}
-                  ${this.isOutOfRange(ds) ? 'aria-disabled="true" disabled' : ''}
+                  ${this.isOutOfRange(ds) ? 'aria-disabled="true"' : ''}
           >
             <time datetime="${ds}">${date.getDate()}</time>
           </button>
@@ -579,7 +580,7 @@ export default class Datepicker extends Controller {
                 tabindex="-1"
                 ${klass}
                 ${ds == this.dateValue ? 'aria-selected="true"' : ''}
-                ${this.isOutOfRange(ds) ? 'aria-disabled="true" disabled' : ''}
+                ${this.isOutOfRange(ds) ? 'aria-disabled="true"' : ''}
         >
           <time datetime="${ds}">${date.getDate()}</time>
         </button>
@@ -594,7 +595,7 @@ export default class Datepicker extends Controller {
         <button type="button"
                 tabindex="-1"
                 ${klass}
-                ${this.isOutOfRange(ds) ? 'aria-disabled="true" disabled' : ''}
+                ${this.isOutOfRange(ds) ? 'aria-disabled="true"' : ''}
         >
           <time datetime="${ds}">${date.getDate()}</time>
         </button>

@@ -4,6 +4,9 @@
 ## Unreleased
 
 
+* Allow dates outside min/max range to be focused.
+
+
 ## v0.0.7 (12 May 2022)
 
 * Allow any 4-digit year.
