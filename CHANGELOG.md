@@ -4,6 +4,8 @@
 ## Unreleased
 
 
+## v0.0.8 (16 May 2022)
+
 * Support disallowing dates.
 * Add CSS class for weekends.
 * Support making weekends unselectable.
