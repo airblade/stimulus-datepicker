@@ -556,7 +556,11 @@ export default class Datepicker extends Controller {
       date.setDate(1 - dayOfWeekOffset)
       for (let month = date.getMonth(); date.getMonth() == month; date.setDate(date.getDate() + 1)) {
         const ds = this.toLocalISOString(date)
-        const klass = this.classAttribute('sdp-prev-month', (this.isToday(date) ? 'sdp-today' : ''))
+        const klass = this.classAttribute(
+          'sdp-prev-month',
+          (this.isToday(date)   ? 'sdp-today'   : ''),
+          (this.isWeekend(date) ? 'sdp-weekend' : '')
+        )
         days.push(`
           <button type="button"
                   tabindex="-1"
@@ -574,6 +578,7 @@ export default class Datepicker extends Controller {
       const ds = this.toLocalISOString(date)
       const klass = this.classAttribute(
         this.isToday(date)   ? 'sdp-today'    : '',
+        this.isWeekend(date) ? 'sdp-weekend'  : '',
         ds == this.dateValue ? 'sdp-selected' : ''
       )
       days.push(`
@@ -591,7 +596,11 @@ export default class Datepicker extends Controller {
     // Next month
     for (let unfilled = (7 - (days.length % 7)) % 7; date.getDate() <= unfilled; date.setDate(date.getDate() + 1)) {
       const ds = this.toLocalISOString(date)
-      const klass = this.classAttribute('sdp-next-month', (this.isToday(date) ? 'sdp-today' : ''))
+      const klass = this.classAttribute(
+        'sdp-next-month',
+        (this.isToday(date)   ? 'sdp-today'   : ''),
+        (this.isWeekend(date) ? 'sdp-weekend' : '')
+      )
       days.push(`
         <button type="button"
                 tabindex="-1"
