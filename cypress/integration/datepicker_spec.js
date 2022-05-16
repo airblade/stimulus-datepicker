@@ -296,4 +296,17 @@ describe('Stimulus datepicker', () => {
     cy.typeDate('20 Apr 2022')
     cy.assertValidationMessage('Date must be 10 Apr 2022 or earlier.')
   })
+
+
+  it('can disallow weekends', () => {
+    cy.setControllerValue('allow-weekends', 'false')
+    cy.showCalendar()
+
+    cy.assertDisabledDate('2022-04-02')
+    cy.assertDisabledDate('2022-04-03')
+    cy.focused().type('{rightArrow}')
+    cy.focused().type('{enter}')
+    cy.assertFocusedDate('2022-04-02')
+    cy.assertCalendar()
+  })
 })

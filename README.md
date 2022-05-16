@@ -68,6 +68,7 @@ You can configure your datepicker with the following attributes.  Declare them o
 | `format` | `"%Y-%m-%d"` | Format for the date in the input field (see below). |
 | `first-day-of-week` | `1` | First day of the week in the calendar (Sunday is `0`). |
 | `day-name-length` | `2` | Length of the abbreviated day names in the calendar, e.g. "Mo". |
+| `allow-weekends` | `"true"` | Whether weekends are selectable. |
 | `jump` | `"absolute"` | When jumping to the previous/next month, whether to go to the same date (`"absolute"`) or the same day of the week (`"relative"`). |
 | `min` | `""` | The earliest choosable date (YYYY-MM-DD). |
 | `max` | `""` | The latest choosable date (YYYY-MM-DD). |

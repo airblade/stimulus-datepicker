@@ -13,6 +13,7 @@ export default class Datepicker extends Controller {
     format:            {type: String, default: '%Y-%m-%d'},
     firstDayOfWeek:    {type: Number, default: 1},
     dayNameLength:     {type: Number, default: 2},
+    allowWeekends:     {type: Boolean, default: true},
     jump:              {type: String, default: 'absolute'},
     underflowMessage:  String,
     overflowMessage:   String
@@ -560,7 +561,7 @@ export default class Datepicker extends Controller {
           <button type="button"
                   tabindex="-1"
                   ${klass}
-                  ${this.isOutOfRange(ds) ? 'aria-disabled="true"' : ''}
+                  ${this.isDisabled(ds) ? 'aria-disabled="true"' : ''}
           >
             <time datetime="${ds}">${date.getDate()}</time>
           </button>
@@ -579,8 +580,8 @@ export default class Datepicker extends Controller {
         <button type="button"
                 tabindex="-1"
                 ${klass}
-                ${ds == this.dateValue ? 'aria-selected="true"' : ''}
-                ${this.isOutOfRange(ds) ? 'aria-disabled="true"' : ''}
+                ${ds == this.dateValue  ? 'aria-selected="true"' : ''}
+                ${this.isDisabled(ds) ? 'aria-disabled="true"' : ''}
         >
           <time datetime="${ds}">${date.getDate()}</time>
         </button>
@@ -595,7 +596,7 @@ export default class Datepicker extends Controller {
         <button type="button"
                 tabindex="-1"
                 ${klass}
-                ${this.isOutOfRange(ds) ? 'aria-disabled="true"' : ''}
+                ${this.isDisabled(ds) ? 'aria-disabled="true"' : ''}
         >
           <time datetime="${ds}">${date.getDate()}</time>
         </button>
@@ -609,6 +610,16 @@ export default class Datepicker extends Controller {
     const presentClasses = classes.filter(c => c.length > 1)
     if (presentClasses.length == 0) return ''
     return `class="${presentClasses.join(' ')}"`
+  }
+
+  // @param dateStr [String]
+  isDisabled(dateStr) {
+    return this.isOutOfRange(dateStr) || (this.isWeekend(this.fromLocalISOString(dateStr)) && !this.allowWeekendsValue)
+  }
+
+  // @param date [Date]
+  isWeekend(date) {
+    return [0, 6].includes(date.getDay())
   }
 
   // @param date [Date]
