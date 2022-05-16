@@ -262,7 +262,7 @@ describe('Stimulus datepicker', () => {
 
     controller.maxValue = '2022-05-17'
     controller.hasMaxValue = true  // This needs explicitly setting
-    assert.isFalse(controller.isDisabled('2022-05-17'))  // Thursday
+    assert.isFalse(controller.isDisabled('2022-05-17'))  // Tuesday
     assert.isTrue(controller.isDisabled('2022-05-18'))
   })
 })
