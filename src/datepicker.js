@@ -558,8 +558,8 @@ export default class Datepicker extends Controller {
         const ds = this.toLocalISOString(date)
         const klass = this.classAttribute(
           'sdp-prev-month',
-          (this.isToday(date)   ? 'sdp-today'   : ''),
-          (this.isWeekend(date) ? 'sdp-weekend' : '')
+          this.isToday(date)   ? 'sdp-today'   : '',
+          this.isWeekend(date) ? 'sdp-weekend' : ''
         )
         days.push(`
           <button type="button"
@@ -598,8 +598,8 @@ export default class Datepicker extends Controller {
       const ds = this.toLocalISOString(date)
       const klass = this.classAttribute(
         'sdp-next-month',
-        (this.isToday(date)   ? 'sdp-today'   : ''),
-        (this.isWeekend(date) ? 'sdp-weekend' : '')
+        this.isToday(date)   ? 'sdp-today'   : '',
+        this.isWeekend(date) ? 'sdp-weekend' : ''
       )
       days.push(`
         <button type="button"
