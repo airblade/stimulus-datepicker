@@ -16,7 +16,8 @@ export default class Datepicker extends Controller {
     allowWeekends:     {type: Boolean, default: true},
     jump:              {type: String, default: 'absolute'},
     underflowMessage:  String,
-    overflowMessage:   String
+    overflowMessage:   String,
+    disallow:          Array
   }
 
   connect() {
@@ -623,7 +624,9 @@ export default class Datepicker extends Controller {
 
   // @param dateStr [String]
   isDisabled(dateStr) {
-    return this.isOutOfRange(dateStr) || (this.isWeekend(this.fromLocalISOString(dateStr)) && !this.allowWeekendsValue)
+    return this.isOutOfRange(dateStr)
+        || (this.isWeekend(this.fromLocalISOString(dateStr)) && !this.allowWeekendsValue)
+        || (this.disallowValue.includes(dateStr))
   }
 
   // @param date [Date]

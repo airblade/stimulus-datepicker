@@ -249,20 +249,29 @@ describe('Stimulus datepicker', () => {
     controller.hasMinValue = false  // This needs explicitly setting
     controller.hasMaxValue = false  // This needs explicitly setting
     controller.allowWeekendsValue = true  // This needs explicitly setting
+    controller.disallowValue = []  // This needs explicitly setting
 
+    // Weekends
     assert.isFalse(controller.isDisabled('2022-05-14'))  // Saturday
 
     controller.allowWeekendsValue = false
     assert.isTrue(controller.isDisabled('2022-05-14'))  // Saturday
 
+    // Min
     controller.minValue = '2022-05-12'
     controller.hasMinValue = true  // This needs explicitly setting
     assert.isFalse(controller.isDisabled('2022-05-12'))  // Thursday
     assert.isTrue(controller.isDisabled('2022-05-11'))
 
+    // Max
     controller.maxValue = '2022-05-17'
     controller.hasMaxValue = true  // This needs explicitly setting
     assert.isFalse(controller.isDisabled('2022-05-17'))  // Tuesday
     assert.isTrue(controller.isDisabled('2022-05-18'))
+
+    // Disallow
+    assert.isFalse(controller.isDisabled('2022-05-16'))
+    controller.disallowValue = ['2022-05-16']
+    assert.isTrue(controller.isDisabled('2022-05-16'))
   })
 })

@@ -4,6 +4,7 @@
 ## Unreleased
 
 
+* Support disallowing dates.
 * Add CSS class for weekends.
 * Support making weekends unselectable.
 * Improve visual indication of dates outside min/max range.

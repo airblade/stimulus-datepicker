@@ -74,6 +74,7 @@ You can configure your datepicker with the following attributes.  Declare them o
 | `max` | `""` | The latest choosable date (YYYY-MM-DD). |
 | `underflowMessage` | `""` | Client-side form validation message when the selected date is earlier than the `min` date.  `%s` is replaced with the formatted min date.  E.g. `"Date must be %s or later."` |
 | `overflowMessage` | `""` | Client-side form validation message when the selected date is later than the `max` date.  `%s` is replaced with the formatted max date.  E.g. `"Date must be %s or earlier."` |
+| `disallow` | `[]` | Dates which cannot be selected.  E.g. '["2022-12-25", "2023-01-01"]' |
 
 You can use the following strftime directives in `data-datepicker-format-value`:
 
