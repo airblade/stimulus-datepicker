@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
+import IsoDate from './iso_date.js'
 
 // All dates are local, not UTC.
 export default class Datepicker extends Controller {
@@ -42,8 +43,10 @@ export default class Datepicker extends Controller {
   }
 
   validationMessage(dateStr) {
-    return this.rangeUnderflow(dateStr) ? this.underflowMessage()
-         : this.rangeOverflow(dateStr)  ? this.overflowMessage()
+    if (!dateStr) return ''
+    const isoDate = new IsoDate(dateStr)
+    return this.rangeUnderflow(isoDate) ? this.underflowMessage()
+         : this.rangeOverflow(isoDate)  ? this.overflowMessage()
          : ''
   }
 
@@ -90,8 +93,8 @@ export default class Datepicker extends Controller {
   }
 
   update() {
-    const isoDate = this.parse(this.inputTarget.value)
-    if (isoDate != '') this.dateValue = isoDate
+    const dateStr = this.parse(this.inputTarget.value)
+    if (dateStr != '') this.dateValue = dateStr
   }
 
   toggle(event) {
@@ -112,35 +115,34 @@ export default class Datepicker extends Controller {
     this.toggleTarget.focus()
   }
 
-  // @param dateStr [String] (YYYY-MM-DD) the date to focus on.
-  open(animate, dateStr = this.initialDateStr()) {
-    this.render(dateStr)
-    this.focusDate(dateStr)
+  open(animate, isoDate = this.initialIsoDate()) {
+    this.render(isoDate)
+    this.focusDate(isoDate)
   }
 
   // Returns the date to focus on initially.  This is `dateValue` if given
   // or today.  Whichever is used, it is clamped to `minValue` and/or `maxValue`
   // dates if given.
-  initialDateStr() {
-    return this.clamp(this.dateValue || this.todayStr())
+  initialIsoDate() {
+    return this.clamp(new IsoDate(this.dateValue))
   }
 
-  clamp(dateStr) {
-    return this.rangeUnderflow(dateStr) ? this.minValue
-         : this.rangeOverflow(dateStr)  ? this.maxValue
-         : dateStr
+  clamp(isoDate) {
+    return this.rangeUnderflow(isoDate) ? new IsoDate(this.minValue)
+         : this.rangeOverflow(isoDate)  ? new IsoDate(this.maxValue)
+         : isoDate
   }
 
-  rangeUnderflow(dateStr) {
-    return this.hasMinValue && dateStr < this.minValue
+  rangeUnderflow(isoDate) {
+    return this.hasMinValue && isoDate.before(new IsoDate(this.minValue))
   }
 
-  rangeOverflow(dateStr) {
-    return this.hasMaxValue && dateStr > this.maxValue
+  rangeOverflow(isoDate) {
+    return this.hasMaxValue && isoDate.after(new IsoDate(this.maxValue))
   }
 
-  isOutOfRange(dateStr) {
-    return this.rangeUnderflow(dateStr) || this.rangeOverflow(dateStr)
+  isOutOfRange(isoDate) {
+    return this.rangeUnderflow(isoDate) || this.rangeOverflow(isoDate)
   }
 
   closeOnOutsideClick(event) {
@@ -152,60 +154,59 @@ export default class Datepicker extends Controller {
   }
 
   redraw() {
-    const dateStr = this.dateFromMonthYearSelectsAndDayGrid()
+    const isoDate = this.dateFromMonthYearSelectsAndDayGrid()
     this.close(false)
-    this.open(false, dateStr)
+    this.open(false, isoDate)
   }
 
   prevMonth() {
-    const dateStr = this.dateFromMonthYearSelectsAndDayGrid()
+    const isoDate = this.dateFromMonthYearSelectsAndDayGrid()
     this.close(false)
-    this.open(false, this.correspondingDateInAdjacentMonth(dateStr, 'previous'))
+    this.open(false, this.correspondingDateInAdjacentMonth(isoDate, 'previous'))
     this.prevMonthTarget.focus()
   }
 
   nextMonth() {
-    const dateStr = this.dateFromMonthYearSelectsAndDayGrid()
+    const isoDate = this.dateFromMonthYearSelectsAndDayGrid()
     this.close(false)
-    this.open(false, this.correspondingDateInAdjacentMonth(dateStr, 'next'))
+    this.open(false, this.correspondingDateInAdjacentMonth(isoDate, 'next'))
     this.nextMonthTarget.focus()
   }
 
   today() {
     this.close(false)
-    this.open(false, this.toLocalISOString(new Date()))
+    this.open(false, new IsoDate())
     this.todayTarget.focus()
   }
 
   // Returns a date where the month and year come from the dropdowns
   // and the day of the month from the grid.
-  // @return [String]
+  // @return [IsoDate]
   dateFromMonthYearSelectsAndDayGrid() {
     const year  = this.yearTarget.value
     const month = this.monthTarget.value
     const day   = this.daysTarget.querySelector('button[tabindex="0"] time').textContent
-    return this.toLocalISO(year, month, day)
+    return new IsoDate(year, month, day)
   }
 
   // Generates the HTML for the calendar and inserts it into the DOM.
   //
   // Does not focus the given date.
   //
-  // @param date [String] the date of interest
-  render(dateStr) {
-    const [yyyy, mm, dd] = dateStr.split('-')
+  // @param isoDate [IsoDate] the date of interest
+  render(isoDate) {
     const cal = `
       <div class="sdp-cal" data-datepicker-target="calendar" data-action="click@window->datepicker#closeOnOutsideClick keydown->datepicker#key" role="dialog" aria-modal="true" aria-label="Choose Date">
         <div class="sdp-nav">
           <div class="sdp-nav-dropdowns">
             <div>
               <select class="sdp-month" data-datepicker-target="month" data-action="datepicker#redraw">
-                ${this.monthOptions(+mm)}
+                ${this.monthOptions(+isoDate.mm)}
               </select>
             </div>
             <div>
               <select class="sdp-year" data-datepicker-target="year" data-action="datepicker#redraw">
-                ${this.yearOptions(+yyyy)}
+                ${this.yearOptions(+isoDate.yyyy)}
               </select>
             </div>
           </div>
@@ -231,7 +232,7 @@ export default class Datepicker extends Controller {
           ${this.daysOfWeek()}
         </div>
         <div class="sdp-days" data-datepicker-target="days" data-action="click->datepicker#pick" role="grid">
-          ${this.days(dateStr)}
+          ${this.days(isoDate)}
         </div>
       </div>
     `
@@ -264,7 +265,7 @@ export default class Datepicker extends Controller {
     const time = event.target
     if (time.parentElement.hasAttribute('aria-disabled')) return
     const dateStr = time.getAttribute('datetime')
-    this.selectDate(dateStr)
+    this.selectDate(new IsoDate(dateStr))
   }
 
   key(event) {
@@ -291,55 +292,56 @@ export default class Datepicker extends Controller {
     if (!this.daysTarget.contains(button)) return
 
     const dateStr = button.querySelector('time').getAttribute('datetime')
+    const isoDate = new IsoDate(dateStr)
 
     switch (event.key) {
       case 'Enter':
       case ' ':
         event.preventDefault()
-        if (!button.hasAttribute('aria-disabled')) this.selectDate(dateStr)
+        if (!button.hasAttribute('aria-disabled')) this.selectDate(isoDate)
         break
       case 'ArrowUp':
       case 'k':
-        this.focusSameDayPreviousWeek(dateStr)
+        this.focusSameDayPreviousWeek(isoDate)
         break
       case 'ArrowDown':
       case 'j':
-        this.focusSameDayNextWeek(dateStr)
+        this.focusSameDayNextWeek(isoDate)
         break
       case 'ArrowLeft':
       case 'h':
-        this.focusPreviousDay(dateStr)
+        this.focusPreviousDay(isoDate)
         break
       case 'ArrowRight':
       case 'l':
-        this.focusNextDay(dateStr)
+        this.focusNextDay(isoDate)
         break
       case 'Home':
       case '0':
       case '^':
-        this.focusFirstDayOfWeek(dateStr)
+        this.focusFirstDayOfWeek(isoDate)
         break
       case 'End':
       case '$':
-        this.focusLastDayOfWeek(dateStr)
+        this.focusLastDayOfWeek(isoDate)
         break
       case 'PageUp':
-        event.shiftKey ? this.focusPreviousYear(dateStr) : this.focusPreviousMonth(dateStr)
+        event.shiftKey ? this.focusPreviousYear(isoDate) : this.focusPreviousMonth(isoDate)
         break
       case 'PageDown':
-        event.shiftKey ? this.focusNextYear(dateStr) : this.focusNextMonth(dateStr)
+        event.shiftKey ? this.focusNextYear(isoDate) : this.focusNextMonth(isoDate)
         break
       case 'b':
-        this.focusPreviousMonth(dateStr)
+        this.focusPreviousMonth(isoDate)
         break
       case 'B':
-        this.focusPreviousYear(dateStr)
+        this.focusPreviousYear(isoDate)
         break
       case 'w':
-        this.focusNextMonth(dateStr)
+        this.focusNextMonth(isoDate)
         break
       case 'W':
-        this.focusNextYear(dateStr)
+        this.focusNextYear(isoDate)
         break
     }
   }
@@ -352,11 +354,11 @@ export default class Datepicker extends Controller {
     return this.calendarTarget.querySelector('.sdp-days button[tabindex="0"]')
   }
 
-  // @param date [String] (YYYY-MM-DD) the date to select
-  selectDate(dateStr) {
+  // @param isoDate [isoDate] the date to select
+  selectDate(isoDate) {
     this.close(true)
     this.toggleTarget.focus()
-    this.dateValue = dateStr
+    this.dateValue = isoDate.toString()
     // Trigger change event on input when user selects date from picker.
     // http://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event
     this.inputTarget.dispatchEvent(new Event('change'))
@@ -366,17 +368,18 @@ export default class Datepicker extends Controller {
   // If the date is not visible because it is in the hidden part of the previous or
   // next month, the calendar is updated to show the corresponding month.
   //
-  // @param date [String] (YYYY-MM-DD) the date to focus on in the calendar
-  focusDate(dateStr) {
-    const time = this.daysTarget.querySelector(`time[datetime="${dateStr}"]`)
+  // @param isoDate [IsoDate] the date to focus on in the calendar
+  focusDate(isoDate) {
+    const time = this.daysTarget.querySelector(`time[datetime="${isoDate.toString()}"]`)
 
     if (!time) {
-      if (dateStr < this.daysTarget.querySelector('time').getAttribute('datetime')) {
+      const leadingDatetime = this.daysTarget.querySelector('time').getAttribute('datetime')
+      if (isoDate.before(new IsoDate(leadingDatetime))) {
         this.prevMonth()
       } else {
         this.nextMonth()
       }
-      this.focusDate(dateStr)
+      this.focusDate(isoDate)
       return
     }
 
@@ -388,132 +391,60 @@ export default class Datepicker extends Controller {
     button.focus()
 
     if (!button.hasAttribute('aria-disabled')) {
-      this.setToggleAriaLabel(`Change Date, ${this.format(dateStr)}`)
+      this.setToggleAriaLabel(`Change Date, ${this.format(isoDate.toString())}`)
     }
   }
 
-  adjustAndFocus(dateStr, offset) {
-    const date = this.fromLocalISOString(dateStr)
-    date.setDate(date.getDate() + offset)
-    this.focusDate(this.toLocalISOString(date))
+  focusSameDayPreviousWeek(isoDate) {
+    this.focusDate(isoDate.increment(-7))
   }
 
-  focusSameDayPreviousWeek(dateStr) {
-    this.adjustAndFocus(dateStr, -7)
+  focusSameDayNextWeek(isoDate) {
+    this.focusDate(isoDate.increment(7))
   }
 
-  focusSameDayNextWeek(dateStr) {
-    this.adjustAndFocus(dateStr, 7)
+  focusPreviousDay(isoDate) {
+    this.focusDate(isoDate.increment(-1))
   }
 
-  focusPreviousDay(dateStr) {
-    this.adjustAndFocus(dateStr, -1)
+  focusNextDay(isoDate) {
+    this.focusDate(isoDate.increment(1))
   }
 
-  focusNextDay(dateStr) {
-    this.adjustAndFocus(dateStr, 1)
+  focusFirstDayOfWeek(isoDate) {
+    this.focusDate(isoDate.firstDayOfWeek(this.firstDayOfWeekValue))
   }
 
-  focusFirstDayOfWeek(dateStr) {
-    const date = this.fromLocalISOString(dateStr)
-    date.setDate(date.getDate() - (7 + date.getDay() - this.firstDayOfWeekValue) % 7)
-    this.focusDate(this.toLocalISOString(date))
+  focusLastDayOfWeek(isoDate) {
+    this.focusDate(isoDate.lastDayOfWeek(this.firstDayOfWeekValue))
   }
 
-  focusLastDayOfWeek(dateStr) {
-    const date = this.fromLocalISOString(dateStr)
-    date.setDate(date.getDate() + this.firstDayOfWeekValue + 6 - date.getDay())
-    this.focusDate(this.toLocalISOString(date))
+  focusPreviousMonth(isoDate) {
+    this.focusDate(this.correspondingDateInAdjacentMonth(isoDate, 'previous'))
   }
 
-  focusPreviousMonth(dateStr) {
-    this.focusDate(this.correspondingDateInAdjacentMonth(dateStr, 'previous'))
+  focusNextMonth(isoDate) {
+    this.focusDate(this.correspondingDateInAdjacentMonth(isoDate, 'next'))
   }
 
-  focusNextMonth(dateStr) {
-    this.focusDate(this.correspondingDateInAdjacentMonth(dateStr, 'next'))
+  focusPreviousYear(isoDate) {
+    this.focusDate(isoDate.previousYear())
   }
 
-  focusPreviousYear(dateStr) {
-    // absolute
-    const [yyyy, mm, dd] = dateStr.split('-')
-    const date = new Date(+yyyy - 1, +mm - 1)
-    const endOfMonth = this.daysInMonth(date.getMonth() + 1, date.getYear())
-    date.setDate(+dd > endOfMonth ? endOfMonth : +dd)
-    this.focusDate(this.toLocalISOString(date))
+  focusNextYear(isoDate) {
+    this.focusDate(isoDate.nextYear())
   }
 
-  focusNextYear(dateStr) {
-    // absolute
-    const [yyyy, mm, dd] = dateStr.split('-')
-    const date = new Date(+yyyy + 1, +mm - 1)
-    const endOfMonth = this.daysInMonth(date.getMonth() + 1, date.getYear())
-    date.setDate(+dd > endOfMonth ? endOfMonth : +dd)
-    this.focusDate(this.toLocalISOString(date))
-  }
-
-  correspondingDateInAdjacentMonth(dateStr, direction) {
+  correspondingDateInAdjacentMonth(isoDate, direction) {
     if (direction == 'previous') {
       return this.jumpValue == 'absolute'
-        ? this.previousMonthAbsolute(dateStr)
-        : this.previousMonthRelative(dateStr)
+        ? isoDate.previousMonthSameDayOfMonth()
+        : isoDate.previousMonthSameDayOfWeek()
     } else {
       return this.jumpValue == 'absolute'
-        ? this.nextMonthAbsolute(dateStr)
-        : this.nextMonthRelative(dateStr)
+        ? isoDate.nextMonthSameDayOfMonth()
+        : isoDate.nextMonthSameDayOfWeek()
     }
-  }
-
-  // Returns the same day of the month in the previous month, e.g. 30th,
-  // if it exists, or the last day of the previous month otherwise.
-  //
-  // @param dateStr [String] the starting date
-  // @return [String] the corresponding date in the previous month
-  previousMonthAbsolute(dateStr) {
-    const [yyyy, mm, dd] = dateStr.split('-')
-    const date = new Date(+yyyy, +mm - 2)
-    const endOfMonth = this.daysInMonth(date.getMonth() + 1, date.getYear())
-    date.setDate(+dd > endOfMonth ? endOfMonth : +dd)
-    return this.toLocalISOString(date)
-  }
-
-  // Returns the same day of the month in the next month, e.g. 30th,
-  // if it exists, or the last day of the next month otherwise.
-  //
-  // @param dateStr [String] the starting date
-  // @return [String] the corresponding date in the next month
-  nextMonthAbsolute(dateStr) {
-    const [yyyy, mm, dd] = dateStr.split('-')
-    const date = new Date(+yyyy, +mm)
-    const endOfMonth = this.daysInMonth(date.getMonth() + 1, date.getYear())
-    date.setDate(+dd > endOfMonth ? endOfMonth : +dd)
-    return this.toLocalISOString(date)
-  }
-
-  // Returns the same day of the week 4 weeks earlier in the previous month,
-  // if it exists, or a week prior otherwise.
-  //
-  // @param dateStr [String] the starting date
-  // @return [String] the corresponding date in the previous month
-  previousMonthRelative(dateStr) {
-    const date = this.fromLocalISOString(dateStr)
-    const month = date.getMonth()
-    date.setDate(date.getDate() - 28)
-    if (date.getMonth() == month) date.setDate(date.getDate() - 7)
-    return this.toLocalISOString(date)
-  }
-
-  // Returns the same day of the week 4 weeks later in the next month,
-  // if it exists, or a week later otherwise.
-  //
-  // @param dateStr [String] the starting date
-  // @return [String] the corresponding date in the next month
-  nextMonthRelative(dateStr) {
-    const date = this.fromLocalISOString(dateStr)
-    const month = date.getMonth()
-    date.setDate(date.getDate() + 28)
-    if (date.getMonth() == month) date.setDate(date.getDate() + 7)
-    return this.toLocalISOString(date)
   }
 
   // @param selected [Number] the selected month (January is 1)
@@ -526,7 +457,8 @@ export default class Datepicker extends Controller {
   // @param selected [Number] the selected year
   yearOptions(selected) {
     const years = []
-    for (let y = selected - 10; y <= selected + 10; y++) years.push(y)
+    const extent = 10
+    for (let y = selected - extent; y <= selected + extent; y++) years.push(y)
     return years
       .map(year => `<option ${year == selected ? 'selected' : ''}>${year}</option>`)
       .join('')
@@ -544,73 +476,38 @@ export default class Datepicker extends Controller {
   //
   // Does not focus on the given date.
   //
-  // @param date [String] (YYYY-MM-DD) the month of interest
+  // @param isoDate [IsoDate] the month of interest
   // @return [String] HTML for the day grid
-  days(dateStr) {
+  days(isoDate) {
     const days = []
-    const date = this.fromLocalISOString(dateStr)
+    const selected = new IsoDate(this.dateValue)
+    let date = isoDate.setDayOfMonth(1).firstDayOfWeek(this.firstDayOfWeekValue)
 
-    // Render previous month
-    date.setDate(1)
-    const dayOfWeekOffset = (date.getDay() - this.firstDayOfWeekValue + 7) % 7  // always positive
-    if (dayOfWeekOffset > 0) {
-      date.setDate(1 - dayOfWeekOffset)
-      for (let month = date.getMonth(); date.getMonth() == month; date.setDate(date.getDate() + 1)) {
-        const ds = this.toLocalISOString(date)
-        const klass = this.classAttribute(
-          'sdp-prev-month',
-          this.isToday(date)   ? 'sdp-today'   : '',
-          this.isWeekend(date) ? 'sdp-weekend' : ''
-        )
-        days.push(`
-          <button type="button"
-                  tabindex="-1"
-                  ${klass}
-                  ${this.isDisabled(ds) ? 'aria-disabled="true"' : ''}
-          >
-            <time datetime="${ds}">${date.getDate()}</time>
-          </button>
-        `)
-      }
-    }
+    while (true) {
+      const isPreviousMonth = date.mm != isoDate.mm && date.before(isoDate)
+      const isNextMonth     = date.mm != isoDate.mm && date.after(isoDate)
 
-    // Current month
-    for (let month = date.getMonth(); date.getMonth() == month; date.setDate(date.getDate() + 1)) {
-      const ds = this.toLocalISOString(date)
+      if (isNextMonth && date.isFirstDayOfWeek(this.firstDayOfWeekValue)) break
+
       const klass = this.classAttribute(
-        this.isToday(date)   ? 'sdp-today'    : '',
-        this.isWeekend(date) ? 'sdp-weekend'  : '',
-        ds == this.dateValue ? 'sdp-selected' : ''
+        isPreviousMonth       ? 'sdp-prev-month' : '',
+        isNextMonth           ? 'sdp-next-month' : '',
+        date.isToday()        ? 'sdp-today'      : '',
+        date.isWeekend()      ? 'sdp-weekend'    : '',
+        date.equals(selected) ? 'sdp-selected'   : ''
       )
       days.push(`
         <button type="button"
                 tabindex="-1"
                 ${klass}
-                ${ds == this.dateValue  ? 'aria-selected="true"' : ''}
-                ${this.isDisabled(ds) ? 'aria-disabled="true"' : ''}
+                ${date.equals(selected) ? 'aria-selected="true"' : ''}
+                ${this.isDisabled(date) ? 'aria-disabled="true"' : ''}
         >
-          <time datetime="${ds}">${date.getDate()}</time>
+          <time datetime="${date.toString()}">${+date.dd}</time>
         </button>
       `)
-    }
 
-    // Next month
-    for (let unfilled = (7 - (days.length % 7)) % 7; date.getDate() <= unfilled; date.setDate(date.getDate() + 1)) {
-      const ds = this.toLocalISOString(date)
-      const klass = this.classAttribute(
-        'sdp-next-month',
-        this.isToday(date)   ? 'sdp-today'   : '',
-        this.isWeekend(date) ? 'sdp-weekend' : ''
-      )
-      days.push(`
-        <button type="button"
-                tabindex="-1"
-                ${klass}
-                ${this.isDisabled(ds) ? 'aria-disabled="true"' : ''}
-        >
-          <time datetime="${ds}">${date.getDate()}</time>
-        </button>
-      `)
+      date = date.increment()
     }
 
     return days.join('')
@@ -622,47 +519,10 @@ export default class Datepicker extends Controller {
     return `class="${presentClasses.join(' ')}"`
   }
 
-  // @param dateStr [String]
-  isDisabled(dateStr) {
-    return this.isOutOfRange(dateStr)
-        || (this.isWeekend(this.fromLocalISOString(dateStr)) && !this.allowWeekendsValue)
-        || (this.disallowValue.includes(dateStr))
-  }
-
-  // @param date [Date]
-  isWeekend(date) {
-    return [0, 6].includes(date.getDay())
-  }
-
-  // @param date [Date]
-  isToday(date) {
-    return this.toLocalISOString(date) == this.todayStr()
-  }
-
-  todayStr() {
-    return this.toLocalISOString(new Date())
-  }
-
-  // @param year [String]
-  // @param month [String] month number (January is 1)
-  // @param day [String] day of month
-  // @return [String]
-  toLocalISO(year, month, day) {
-    return `${year}-${this.twoDigit(month)}-${this.twoDigit(day)}`
-  }
-
-  // @param date [Date] a date instance
-  // @return [String] (YYYY-MM-DD) a local date
-  toLocalISOString(date) {
-    return this.toLocalISO(date.getFullYear(), date.getMonth() + 1, date.getDate())
-  }
-
-  // @param dateStr [String] (YYYY-MM-DD) a local date
-  // @return [Date] a date instance
-  fromLocalISOString(dateStr) {
-    // Cannot use `new Date('YYYY-MM-DD')`: it is treated as UTC, not local.
-    const [yyyy, mm, dd] = dateStr.split('-')
-    return new Date(+yyyy, +mm - 1, +dd)
+  isDisabled(isoDate) {
+    return this.isOutOfRange(isoDate)
+        || (isoDate.isWeekend() && !this.allowWeekendsValue)
+        || (this.disallowValue.includes(isoDate.toString()))
   }
 
   // Formats an ISO8601 date, using the `format` value, for display to the user.
@@ -672,19 +532,24 @@ export default class Datepicker extends Controller {
   // @return [String] the date in a user-facing format, or an empty string if the
   //   given date cannot be formatted
   format(str) {
-    if (!this.isValidISO8601Date(str)) return ''
+    if (!IsoDate.isValidStr(str)) return ''
 
     const [yyyy, mm, dd] = str.split('-')
 
     return this.formatValue
       .replace('%d',  dd)
       .replace('%-d', +dd)
-      .replace('%m',  this.twoDigit(mm))
+      .replace('%m',  this.zeroPad(mm))
       .replace('%-m', +mm)
       .replace('%B',  this.localisedMonth(mm, 'long'))
       .replace('%b',  this.localisedMonth(mm, 'short'))
       .replace('%Y',  yyyy)
       .replace('%y',  +yyyy % 100)
+  }
+
+  // Returns a two-digit zero-padded string.
+  zeroPad(num) {
+    return num.toString().padStart(2, '0')
   }
 
   // Parses a date from the user, using the `format` value, into an ISO8601 date.
@@ -719,8 +584,8 @@ export default class Datepicker extends Controller {
       funcs[i].call(parts, matches[i + 1], this)
     }
 
-    if (!this.isValidDate(parts.year, parts.month, parts.day)) return ''
-    return `${parts.year}-${this.twoDigit(parts.month)}-${this.twoDigit(parts.day)}`
+    if (!IsoDate.isValidDate(parts.year, parts.month, parts.day)) return ''
+    return new IsoDate(parts.year, parts.month, parts.day).toString()
   }
 
   // Returns the name of the month in the current locale.
@@ -767,43 +632,6 @@ export default class Datepicker extends Controller {
       names.push(formatter.format(new Date(`2022-04-${i}T00:00:00+00:00`)))
     }
     return names
-  }
-
-  isValidISO8601Date(str) {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(str)) return false
-    return this.isValidDate(...str.split('-').map(s => +s))
-  }
-
-  // @param year [Number] four-digit year
-  // @param month [Number] month number (January is 1)
-  // @param day [Number] day in month
-  isValidDate(year, month, day) {
-    if (year  < 1000 || year  > 9999) return false
-    if (month <    1 || month >   12) return false
-    if (day   <    1 || day   > this.daysInMonth(month, year)) return false
-    return true
-  }
-
-  // Returns the number of days in the month.
-  //
-  // @param month [Number] the month (1 is January)
-  // @param year [Number] the year (e.g. 2022)
-  // @return [Number] the number of days
-  daysInMonth(month, year) {
-    if ([1, 3, 5, 7, 8, 10, 12].includes(month)) return 31
-    if ([4, 6, 9, 11].includes(month)) return 30
-    return this.isLeapYear(year) ? 29 : 28
-  }
-
-  isLeapYear(year) {
-    if ((year % 400) == 0) return true
-    if ((year % 100) == 0) return false
-    return year % 4 == 0
-  }
-
-  // Returns a two-digit zero-padded string.
-  twoDigit(num) {
-    return num.toString().padStart(2, '0')
   }
 
 }
