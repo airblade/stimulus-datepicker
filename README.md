@@ -69,11 +69,11 @@ You can configure your datepicker with the following attributes.  Declare them o
 | `first-day-of-week` | `1` | First day of the week in the calendar (Sunday is `0`). |
 | `day-name-length` | `2` | Length of the abbreviated day names in the calendar, e.g. "Mo". |
 | `allow-weekends` | `"true"` | Whether weekends are selectable. |
-| `monthJump` | `"dayOfMonth"` | When jumping to the previous/next month, whether to go to the same day of the month (`"dayOfMonth"`) or the same day of the week (`"dayOfWeek"`). |
+| `month-jump` | `"dayOfMonth"` | When jumping to the previous/next month, whether to go to the same day of the month (`"dayOfMonth"`) or the same day of the week (`"dayOfWeek"`). |
 | `min` | `""` | The earliest choosable date (YYYY-MM-DD). |
 | `max` | `""` | The latest choosable date (YYYY-MM-DD). |
-| `underflowMessage` | `""` | Client-side form validation message when the selected date is earlier than the `min` date.  `%s` is replaced with the formatted min date.  E.g. `"Date must be %s or later."` |
-| `overflowMessage` | `""` | Client-side form validation message when the selected date is later than the `max` date.  `%s` is replaced with the formatted max date.  E.g. `"Date must be %s or earlier."` |
+| `underflow-message` | `""` | Client-side form validation message when the selected date is earlier than the `min` date.  `%s` is replaced with the formatted min date.  E.g. `"Date must be %s or later."` |
+| `overflow-message` | `""` | Client-side form validation message when the selected date is later than the `max` date.  `%s` is replaced with the formatted max date.  E.g. `"Date must be %s or earlier."` |
 | `disallow` | `[]` | Dates which cannot be selected.  E.g. '["2022-12-25", "2023-01-01"]' |
 
 You can use the following strftime directives in `data-datepicker-format-value`:
