@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+* Fix click handling on nested elements in day grid.
 * Rename `jump` value to `monthJump`.
 * Make internal model functions private.
 * Add some helper functions.

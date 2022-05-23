@@ -262,8 +262,22 @@ export default class Datepicker extends Controller {
 
   pick(event) {
     event.preventDefault()
-    const time = event.target
-    if (time.parentElement.hasAttribute('aria-disabled')) return
+
+    let button, time
+    switch (event.target.constructor) {
+      case HTMLTimeElement:
+        time = event.target
+        button = time.parentElement
+        break
+      case HTMLButtonElement:
+        button = event.target
+        time = button.children[0]
+        break
+      default:
+        return
+    }
+
+    if (button.hasAttribute('aria-disabled')) return
     const dateStr = time.getAttribute('datetime')
     this.selectDate(new IsoDate(dateStr))
   }
