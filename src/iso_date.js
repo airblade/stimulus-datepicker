@@ -144,7 +144,7 @@ export default class IsoDate {
 
   static isValidStr(str) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(str)) return false
-    return IsoDate.isValidDate(...str.split('-').map(s => +s))
+    return this.isValidDate(...str.split('-').map(s => +s))
   }
 
   // @param year [Number] four-digit year
@@ -153,7 +153,7 @@ export default class IsoDate {
   static isValidDate(year, month, day) {
     if (year  < 1000 || year  > 9999) return false
     if (month <    1 || month >   12) return false
-    if (day   <    1 || day   > IsoDate.daysInMonth(month, year)) return false
+    if (day   <    1 || day   > this.daysInMonth(month, year)) return false
     return true
   }
 
@@ -167,7 +167,7 @@ export default class IsoDate {
   static daysInMonth(month, year) {
     if ([1, 3, 5, 7, 8, 10, 12].includes(month)) return 31
     if ([4, 6, 9, 11].includes(month)) return 30
-    return IsoDate.isLeapYear(year) ? 29 : 28
+    return this.isLeapYear(year) ? 29 : 28
   }
 
   static isLeapYear(year) {
