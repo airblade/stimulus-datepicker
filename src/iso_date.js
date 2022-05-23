@@ -70,19 +70,17 @@ export default class IsoDate {
   }
 
   previousMonthSameDayOfWeek() {
-    const date = this.#toDate()
-    const month = date.getMonth()
-    date.setDate(date.getDate() - 28)
-    if (date.getMonth() == month) date.setDate(date.getDate() - 7)
-    return new IsoDate(date)
+    const month = this.mm
+    let isoDate = this.increment('dd', -28)
+    if (isoDate.mm == month) isoDate = isoDate.increment('dd', -7)
+    return isoDate
   }
 
   nextMonthSameDayOfWeek() {
-    const date = this.#toDate()
-    const month = date.getMonth()
-    date.setDate(date.getDate() + 28)
-    if (date.getMonth() == month) date.setDate(date.getDate() + 7)
-    return new IsoDate(date)
+    const month = this.mm
+    let isoDate = this.increment('dd', 28)
+    if (isoDate.mm == month) isoDate = isoDate.increment('dd', 7)
+    return isoDate
   }
 
   previousWeek() {
