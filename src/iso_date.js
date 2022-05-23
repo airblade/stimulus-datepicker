@@ -52,31 +52,19 @@ export default class IsoDate {
   }
 
   previousYear() {
-    const date = new Date(+this.yyyy - 1, +this.mm - 1)
-    const endOfMonth = IsoDate.daysInMonth(date.getMonth() + 1, date.getYear())
-    date.setDate(+this.dd > endOfMonth ? endOfMonth : +this.dd)
-    return new IsoDate(date)
+    return this.increment('yyyy', -1)
   }
 
   nextYear() {
-    const date = new Date(+this.yyyy + 1, +this.mm - 1)
-    const endOfMonth = IsoDate.daysInMonth(date.getMonth() + 1, date.getYear())
-    date.setDate(+this.dd > endOfMonth ? endOfMonth : +this.dd)
-    return new IsoDate(date)
+    return this.increment('yyyy', 1)
   }
 
   nextMonthSameDayOfMonth() {
-    const date = new Date(+this.yyyy, +this.mm)
-    const endOfMonth = IsoDate.daysInMonth(date.getMonth() + 1, date.getYear())
-    date.setDate(+this.dd > endOfMonth ? endOfMonth : +this.dd)
-    return new IsoDate(date)
+    return this.increment('mm', 1)
   }
 
   previousMonthSameDayOfMonth() {
-    const date = new Date(+this.yyyy, +this.mm - 2)
-    const endOfMonth = IsoDate.daysInMonth(date.getMonth() + 1, date.getYear())
-    date.setDate(+this.dd > endOfMonth ? endOfMonth : +this.dd)
-    return new IsoDate(date)
+    return this.increment('mm', -1)
   }
 
   nextMonthSameDayOfWeek() {
@@ -119,9 +107,20 @@ export default class IsoDate {
     return this.toString() > isoDate.toString()
   }
 
-  increment(count = 1) {
-    const date = this.toDate()
-    date.setDate(date.getDate() + count)
+  // @param unit [String] 'dd' | 'mm' | 'yyyy'
+  // @param count [Number]
+  increment(unit, count) {
+    let date
+    if (unit == 'dd') {
+      date = this.toDate()
+      date.setDate(date.getDate() + count)
+    } else {
+      date = unit == 'yyyy'
+           ? new Date(+this.yyyy + count, +this.mm - 1)
+           : new Date(+this.yyyy, +this.mm - 1 + count)
+      const endOfMonth = IsoDate.daysInMonth(date.getMonth() + 1, date.getYear())
+      date.setDate(+this.dd > endOfMonth ? endOfMonth : +this.dd)
+    }
     return new IsoDate(date)
   }
 

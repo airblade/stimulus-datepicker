@@ -173,9 +173,18 @@ describe('IsoDate', () => {
   })
 
   it('increment()', () => {
-    assert.equal(new IsoDate('2022-05-21').increment().toString(), '2022-05-22')
-    assert.equal(new IsoDate('2022-05-21').increment(2).toString(), '2022-05-23')
-    assert.equal(new IsoDate('2022-05-21').increment(-2).toString(), '2022-05-19')
+    assert.equal(new IsoDate('2022-05-21').increment('dd',  1).toString(), '2022-05-22')
+    assert.equal(new IsoDate('2022-05-21').increment('dd', -1).toString(), '2022-05-20')
+
+    assert.equal(new IsoDate('2022-05-21').increment('mm',  1).toString(), '2022-06-21')
+    assert.equal(new IsoDate('2022-05-21').increment('mm', -1).toString(), '2022-04-21')
+    assert.equal(new IsoDate('2022-05-31').increment('mm',  1).toString(), '2022-06-30')
+    assert.equal(new IsoDate('2022-05-31').increment('mm', -1).toString(), '2022-04-30')
+
+    assert.equal(new IsoDate('2022-05-21').increment('yyyy',  1).toString(), '2023-05-21')
+    assert.equal(new IsoDate('2022-05-21').increment('yyyy', -1).toString(), '2021-05-21')
+    assert.equal(new IsoDate('2024-02-29').increment('yyyy',  1).toString(), '2025-02-28')
+    assert.equal(new IsoDate('2024-02-29').increment('yyyy', -1).toString(), '2023-02-28')
   })
 
   it('isValidStr()', () => {

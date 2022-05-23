@@ -396,19 +396,19 @@ export default class Datepicker extends Controller {
   }
 
   focusSameDayPreviousWeek(isoDate) {
-    this.focusDate(isoDate.increment(-7))
+    this.focusDate(isoDate.increment('dd', -7))
   }
 
   focusSameDayNextWeek(isoDate) {
-    this.focusDate(isoDate.increment(7))
+    this.focusDate(isoDate.increment('dd', 7))
   }
 
   focusPreviousDay(isoDate) {
-    this.focusDate(isoDate.increment(-1))
+    this.focusDate(isoDate.increment('dd', -1))
   }
 
   focusNextDay(isoDate) {
-    this.focusDate(isoDate.increment(1))
+    this.focusDate(isoDate.increment('dd', 1))
   }
 
   focusFirstDayOfWeek(isoDate) {
@@ -507,7 +507,7 @@ export default class Datepicker extends Controller {
         </button>
       `)
 
-      date = date.increment()
+      date = date.increment('dd', 1)
     }
 
     return days.join('')

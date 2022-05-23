@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+* Refactor model.
 * Extract iso date model.
 
 
