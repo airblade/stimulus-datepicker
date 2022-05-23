@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+* Make internal model functions private.
 * Add some helper functions.
 * Refactor model.
 * Extract iso date model.
