@@ -3,6 +3,9 @@
 
 ## Unreleased
 
+
+## v0.0.9 (23 May 2022)
+
 * Fix click handling on nested elements in day grid.
 * Rename `jump` value to `monthJump`.
 * Make internal model functions private.
