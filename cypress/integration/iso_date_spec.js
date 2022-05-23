@@ -114,14 +114,30 @@ describe('IsoDate', () => {
     assert.equal(new IsoDate('2022-03-01').nextMonthSameDayOfWeek().toString(), '2022-04-05')
   })
 
-  it('previousMonthSameDayOfMonth', () => {
-    assert.equal(new IsoDate('2022-04-14').previousMonthSameDayOfMonth().toString(), '2022-03-14')
-    assert.equal(new IsoDate('2022-03-31').previousMonthSameDayOfMonth().toString(), '2022-02-28')
+  it('previousDay()', () => {
+    assert.equal(new IsoDate('2022-01-01').previousDay().toString(), '2021-12-31')
   })
 
-  it('nextMonthSameDayOfMonth', () => {
-    assert.equal(new IsoDate('2022-03-14').nextMonthSameDayOfMonth().toString(), '2022-04-14')
-    assert.equal(new IsoDate('2022-03-31').nextMonthSameDayOfMonth().toString(), '2022-04-30')
+  it('nextDay()', () => {
+    assert.equal(new IsoDate('2021-12-31').nextDay().toString(), '2022-01-01')
+  })
+
+  it('previousWeek()', () => {
+    assert.equal(new IsoDate('2022-01-01').previousWeek().toString(), '2021-12-25')
+  })
+
+  it('nextWeek()', () => {
+    assert.equal(new IsoDate('2021-12-31').nextWeek().toString(), '2022-01-07')
+  })
+
+  it('previousMonth()', () => {
+    assert.equal(new IsoDate('2022-04-14').previousMonth().toString(), '2022-03-14')
+    assert.equal(new IsoDate('2022-03-31').previousMonth().toString(), '2022-02-28')
+  })
+
+  it('nextMonth()', () => {
+    assert.equal(new IsoDate('2022-03-14').nextMonth().toString(), '2022-04-14')
+    assert.equal(new IsoDate('2022-03-31').nextMonth().toString(), '2022-04-30')
   })
 
   it('previousYear()', () => {

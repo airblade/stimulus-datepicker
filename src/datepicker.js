@@ -396,19 +396,19 @@ export default class Datepicker extends Controller {
   }
 
   focusSameDayPreviousWeek(isoDate) {
-    this.focusDate(isoDate.increment('dd', -7))
+    this.focusDate(isoDate.previousWeek())
   }
 
   focusSameDayNextWeek(isoDate) {
-    this.focusDate(isoDate.increment('dd', 7))
+    this.focusDate(isoDate.nextWeek())
   }
 
   focusPreviousDay(isoDate) {
-    this.focusDate(isoDate.increment('dd', -1))
+    this.focusDate(isoDate.previousDay())
   }
 
   focusNextDay(isoDate) {
-    this.focusDate(isoDate.increment('dd', 1))
+    this.focusDate(isoDate.nextDay())
   }
 
   focusFirstDayOfWeek(isoDate) {
@@ -438,11 +438,11 @@ export default class Datepicker extends Controller {
   correspondingDateInAdjacentMonth(isoDate, direction) {
     if (direction == 'previous') {
       return this.jumpValue == 'absolute'
-        ? isoDate.previousMonthSameDayOfMonth()
+        ? isoDate.previousMonth()
         : isoDate.previousMonthSameDayOfWeek()
     } else {
       return this.jumpValue == 'absolute'
-        ? isoDate.nextMonthSameDayOfMonth()
+        ? isoDate.nextMonth()
         : isoDate.nextMonthSameDayOfWeek()
     }
   }

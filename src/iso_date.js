@@ -59,12 +59,22 @@ export default class IsoDate {
     return this.increment('yyyy', 1)
   }
 
-  nextMonthSameDayOfMonth() {
+  // Same day of month
+  previousMonth() {
+    return this.increment('mm', -1)
+  }
+
+  // Same day of month
+  nextMonth() {
     return this.increment('mm', 1)
   }
 
-  previousMonthSameDayOfMonth() {
-    return this.increment('mm', -1)
+  previousMonthSameDayOfWeek() {
+    const date = this.toDate()
+    const month = date.getMonth()
+    date.setDate(date.getDate() - 28)
+    if (date.getMonth() == month) date.setDate(date.getDate() - 7)
+    return new IsoDate(date)
   }
 
   nextMonthSameDayOfWeek() {
@@ -75,12 +85,20 @@ export default class IsoDate {
     return new IsoDate(date)
   }
 
-  previousMonthSameDayOfWeek() {
-    const date = this.toDate()
-    const month = date.getMonth()
-    date.setDate(date.getDate() - 28)
-    if (date.getMonth() == month) date.setDate(date.getDate() - 7)
-    return new IsoDate(date)
+  previousWeek() {
+    return this.increment('dd', -7)
+  }
+
+  nextWeek() {
+    return this.increment('dd', 7)
+  }
+
+  previousDay() {
+    return this.increment('dd', -1)
+  }
+
+  nextDay() {
+    return this.increment('dd', 1)
   }
 
   isWeekend() {

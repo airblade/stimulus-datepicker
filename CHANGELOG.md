@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+* Add some helper functions.
 * Refactor model.
 * Extract iso date model.
 
