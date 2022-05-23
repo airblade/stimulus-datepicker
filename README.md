@@ -132,8 +132,8 @@ The datepicker is fully navigable by keyboard.  In addition to the WAI-ARIA keys
 
 <sup>*</sup> The corresponding date in the adjacent month depends on `data-datepicker-month-jump-value`:
 
-- `"absolute"`: the corresponding date is the same date, e.g. 7th;
-- `"relative"`: the corresponding date is the same day of the week, four weeks earlier/later.
+- `"dayOfMonth"`: the corresponding date is the same date, e.g. 7th;
+- `"dayOfWeek"`: the corresponding date is the same day of the week, four weeks earlier/later.
 
 
 ## Intellectual Property
