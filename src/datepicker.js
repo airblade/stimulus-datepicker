@@ -521,7 +521,7 @@ export default class Datepicker extends Controller {
         </button>
       `)
 
-      date = date.increment('dd', 1)
+      date = date.nextDay()
     }
 
     return days.join('')
