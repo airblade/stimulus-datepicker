@@ -90,7 +90,7 @@
   border-right: 0;
   width: 0.3em;
   height: 0.3em;
-  transform: rotate(-45deg);
+  transform: translateY(-1px) rotate(-45deg);
   right: 10px;
   position: relative;
 }

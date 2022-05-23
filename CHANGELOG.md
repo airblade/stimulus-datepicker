@@ -3,6 +3,8 @@
 
 ## Unreleased
 
+* Move dropdown arrows a little higher.
+
 
 ## v0.0.9 (23 May 2022)
 
