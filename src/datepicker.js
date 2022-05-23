@@ -528,7 +528,7 @@ export default class Datepicker extends Controller {
   }
 
   classAttribute(...classes) {
-    const presentClasses = classes.filter(c => c.length > 1)
+    const presentClasses = classes.filter(c => c)
     if (presentClasses.length == 0) return ''
     return `class="${presentClasses.join(' ')}"`
   }
