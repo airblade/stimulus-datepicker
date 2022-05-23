@@ -305,7 +305,7 @@ export default class Datepicker extends Controller {
     const button = event.target
     if (!this.daysTarget.contains(button)) return
 
-    const dateStr = button.querySelector('time').getAttribute('datetime')
+    const dateStr = button.children[0].getAttribute('datetime')
     const isoDate = new IsoDate(dateStr)
 
     switch (event.key) {
