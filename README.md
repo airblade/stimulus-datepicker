@@ -69,7 +69,7 @@ You can configure your datepicker with the following attributes.  Declare them o
 | `first-day-of-week` | `1` | First day of the week in the calendar (Sunday is `0`). |
 | `day-name-length` | `2` | Length of the abbreviated day names in the calendar, e.g. "Mo". |
 | `allow-weekends` | `"true"` | Whether weekends are selectable. |
-| `jump` | `"absolute"` | When jumping to the previous/next month, whether to go to the same date (`"absolute"`) or the same day of the week (`"relative"`). |
+| `monthJump` | `"dayOfMonth"` | When jumping to the previous/next month, whether to go to the same day of the month (`"dayOfMonth"`) or the same day of the week (`"dayOfWeek"`). |
 | `min` | `""` | The earliest choosable date (YYYY-MM-DD). |
 | `max` | `""` | The latest choosable date (YYYY-MM-DD). |
 | `underflowMessage` | `""` | Client-side form validation message when the selected date is earlier than the `min` date.  `%s` is replaced with the formatted min date.  E.g. `"Date must be %s or later."` |
@@ -130,7 +130,7 @@ The datepicker is fully navigable by keyboard.  In addition to the WAI-ARIA keys
 | <kbd>Page Down</kbd>, <kbd>w</kbd> | Change the grid of dates to the next month and focus on the corresponding<sup>*</sup> date one month later. |
 | <kbd>Shift</kbd> + <kbd>Page Down</kbd>, <kbd>W</kbd> | Change the grid of dates to the next year and focus on the same date one year later. |
 
-<sup>*</sup> The corresponding date in the adjacent month depends on `data-datepicker-jump-value`:
+<sup>*</sup> The corresponding date in the adjacent month depends on `data-datepicker-month-jump-value`:
 
 - `"absolute"`: the corresponding date is the same date, e.g. 7th;
 - `"relative"`: the corresponding date is the same day of the week, four weeks earlier/later.

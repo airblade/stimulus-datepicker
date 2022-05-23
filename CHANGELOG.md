@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+* Rename `jump` value to `monthJump`.
 * Make internal model functions private.
 * Add some helper functions.
 * Refactor model.

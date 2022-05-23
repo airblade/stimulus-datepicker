@@ -15,7 +15,7 @@ export default class Datepicker extends Controller {
     firstDayOfWeek:    {type: Number, default: 1},
     dayNameLength:     {type: Number, default: 2},
     allowWeekends:     {type: Boolean, default: true},
-    jump:              {type: String, default: 'absolute'},
+    monthJump:         {type: String, default: 'dayOfMonth'},
     underflowMessage:  String,
     overflowMessage:   String,
     disallow:          Array
@@ -437,11 +437,11 @@ export default class Datepicker extends Controller {
 
   correspondingDateInAdjacentMonth(isoDate, direction) {
     if (direction == 'previous') {
-      return this.jumpValue == 'absolute'
+      return this.monthJumpValue == 'dayOfMonth'
         ? isoDate.previousMonth()
         : isoDate.previousMonthSameDayOfWeek()
     } else {
-      return this.jumpValue == 'absolute'
+      return this.monthJumpValue == 'dayOfMonth'
         ? isoDate.nextMonth()
         : isoDate.nextMonthSameDayOfWeek()
     }
