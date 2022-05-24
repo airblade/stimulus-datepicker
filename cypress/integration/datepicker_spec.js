@@ -283,8 +283,7 @@ describe('Stimulus datepicker', () => {
     cy.setFormat('%d %b %Y')
     cy.setControllerValue('min', '2022-03-30')
     cy.setControllerValue('max', '2022-04-10')
-    cy.setControllerValue('underflow-message', 'Date must be %s or later.')
-    cy.setControllerValue('overflow-message', 'Date must be %s or earlier.')
+    cy.setControllerValue('text', '{"underflow": "Date must be %s or later.", "overflow": "Date must be %s or earlier."}')
     cy.showCalendar()
 
     cy.typeDate('20 Mar 2022')

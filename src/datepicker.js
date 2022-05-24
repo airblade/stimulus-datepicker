@@ -16,9 +16,22 @@ export default class Datepicker extends Controller {
     dayNameLength:     {type: Number, default: 2},
     allowWeekends:     {type: Boolean, default: true},
     monthJump:         {type: String, default: 'dayOfMonth'},
-    underflowMessage:  String,
-    overflowMessage:   String,
-    disallow:          Array
+    disallow:          Array,
+    text:              Object
+  }
+
+  static defaultTextValue = {
+    underflow:     '',
+    overflow:      '',
+    previousMonth: 'Previous month',
+    nextMonth:     'Next month',
+    today:         'Today',
+    chooseDate:    'Choose Date',
+    changeDate:    'Change Date'
+  }
+
+  text(key) {
+    return {...this.constructor.defaultTextValue, ...this.textValue}[key]
   }
 
   connect() {
@@ -51,11 +64,11 @@ export default class Datepicker extends Controller {
   }
 
   underflowMessage() {
-    return this.underflowMessageValue.replace('%s', this.format(this.minValue))
+    return this.text('underflow').replace('%s', this.format(this.minValue))
   }
 
   overflowMessage() {
-    return this.overflowMessageValue.replace('%s', this.format(this.maxValue))
+    return this.text('overflow').replace('%s', this.format(this.maxValue))
   }
 
   addHiddenInput() {
@@ -87,7 +100,7 @@ export default class Datepicker extends Controller {
     }
   }
 
-  setToggleAriaLabel(value = 'Choose Date') {
+  setToggleAriaLabel(value = this.text('chooseDate')) {
     if (!this.hasToggleTarget) return
     this.toggleTarget.setAttribute('aria-label', value);
   }
@@ -196,7 +209,7 @@ export default class Datepicker extends Controller {
   // @param isoDate [IsoDate] the date of interest
   render(isoDate) {
     const cal = `
-      <div class="sdp-cal" data-datepicker-target="calendar" data-action="click@window->datepicker#closeOnOutsideClick keydown->datepicker#key" role="dialog" aria-modal="true" aria-label="Choose Date">
+      <div class="sdp-cal" data-datepicker-target="calendar" data-action="click@window->datepicker#closeOnOutsideClick keydown->datepicker#key" role="dialog" aria-modal="true" aria-label="${this.text('chooseDate')}">
         <div class="sdp-nav">
           <div class="sdp-nav-dropdowns">
             <div>
@@ -211,17 +224,17 @@ export default class Datepicker extends Controller {
             </div>
           </div>
           <div class="sdp-nav-buttons">
-            <button class="sdp-goto-prev" data-datepicker-target="prevMonth" data-action="datepicker#prevMonth" title="Previous month" aria-label="Previous month">
+            <button class="sdp-goto-prev" data-datepicker-target="prevMonth" data-action="datepicker#prevMonth" title="${this.text('previousMonth')}" aria-label="${this.text('previousMonth')}">
               <svg viewBox="0 0 10 10">
                 <polyline points="7,1 3,5 7,9" />
               </svg>
             </button>
-            <button class="sdp-goto-today" data-datepicker-target="today" data-action="datepicker#today" title="Today" aria-label="Today">
+            <button class="sdp-goto-today" data-datepicker-target="today" data-action="datepicker#today" title="${this.text('today')}" aria-label="${this.text('today')}">
               <svg viewBox="0 0 10 10">
                 <circle cx="5" cy="5" r="4" />
               </svg>
             </button>
-            <button class="sdp-goto-next" data-datepicker-target="nextMonth" data-action="datepicker#nextMonth" title="Next month" aria-label="Next month">
+            <button class="sdp-goto-next" data-datepicker-target="nextMonth" data-action="datepicker#nextMonth" title="${this.text('nextMonth')}" aria-label="${this.text('nextMonth')}">
               <svg viewBox="0 0 10 10">
                 <polyline points="3,1 7,5 3,9" />
               </svg>
@@ -405,7 +418,7 @@ export default class Datepicker extends Controller {
     button.focus()
 
     if (!button.hasAttribute('aria-disabled')) {
-      this.setToggleAriaLabel(`Change Date, ${this.format(isoDate.toString())}`)
+      this.setToggleAriaLabel(`${this.text('changeDate')}, ${this.format(isoDate.toString())}`)
     }
   }
 

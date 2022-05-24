@@ -10,7 +10,7 @@ Please see the [demo page](https://airblade.github.io/stimulus-datepicker/) for 
 
 Your server produces an ISO8601 date; your user interacts with it in the format you configured and/or via the popup calendar; the form sends the date back to the server in ISO format.
 
-Month and day names are generated in the user's locale.
+Month and day names are generated in the user's locale.  Button titles and ARIA labels are customisable, e.g. for localisation.
 
 Dates are local; no timezones or daylight savings are involved.
 
@@ -74,7 +74,8 @@ You can configure your datepicker with the following attributes.  Declare them o
 | `max` | `""` | The latest choosable date (YYYY-MM-DD). |
 | `underflow-message` | `""` | Client-side form validation message when the selected date is earlier than the `min` date.  `%s` is replaced with the formatted min date.  E.g. `"Date must be %s or later."` |
 | `overflow-message` | `""` | Client-side form validation message when the selected date is later than the `max` date.  `%s` is replaced with the formatted max date.  E.g. `"Date must be %s or earlier."` |
-| `disallow` | `[]` | Dates which cannot be selected.  E.g. '["2022-12-25", "2023-01-01"]' |
+| `disallow` | `[]` | Dates which cannot be selected.  E.g. `["2022-12-25", "2023-01-01"]` |
+| `text` | <pre>{<br>  underflow:     "",<br>  overflow:       "",<br>  previousMonth: "Previous month",<br>  nextMonth:     "Next month",<br>  today:         "Today",<br>  chooseDate:    "Choose Date",<br>  changeDate:    "Change Date"<br>}</pre> | User-facing text.  The value object is merged into the defaults.<br><ul><li>_underflow_:  client-side form validation message when the selected date is earlier than the `min` date.  `%s` is replaced with the formatted min date.  E.g. `"Date must be %s or later."`</li><li>_overflow_: client-side form validation message when the selected date is later than the `max` date.  `%s` is replaced with the formatted max date.  E.g. `"Date must be %s or earlier."`</li><li>_previousMonth_, _nextMonth_, _today_: button titles and ARIA labels</li><li>_chooseDate_, _changeDate_: ARIA labels</li></ul>  |
 
 You can use the following strftime directives in `data-datepicker-format-value`:
 

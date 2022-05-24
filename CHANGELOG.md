@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+* Allow configuration of text.
 * Move dropdown arrows a little higher.
 
 
