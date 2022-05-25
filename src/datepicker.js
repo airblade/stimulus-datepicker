@@ -329,46 +329,50 @@ export default class Datepicker extends Controller {
         break
       case 'ArrowUp':
       case 'k':
-        this.focusSameDayPreviousWeek(isoDate)
+        this.focusDate(isoDate.previousWeek())
         break
       case 'ArrowDown':
       case 'j':
-        this.focusSameDayNextWeek(isoDate)
+        this.focusDate(isoDate.nextWeek())
         break
       case 'ArrowLeft':
       case 'h':
-        this.focusPreviousDay(isoDate)
+        this.focusDate(isoDate.previousDay())
         break
       case 'ArrowRight':
       case 'l':
-        this.focusNextDay(isoDate)
+        this.focusDate(isoDate.nextDay())
         break
       case 'Home':
       case '0':
       case '^':
-        this.focusFirstDayOfWeek(isoDate)
+        this.focusDate(isoDate.firstDayOfWeek(this.firstDayOfWeekValue))
         break
       case 'End':
       case '$':
-        this.focusLastDayOfWeek(isoDate)
+        this.focusDate(isoDate.lastDayOfWeek(this.firstDayOfWeekValue))
         break
       case 'PageUp':
-        event.shiftKey ? this.focusPreviousYear(isoDate) : this.focusPreviousMonth(isoDate)
+        event.shiftKey
+          ? this.focusDate(isoDate.previousYear())
+          : this.focusDate(this.correspondingDateInAdjacentMonth(isoDate, 'previous'))
         break
       case 'PageDown':
-        event.shiftKey ? this.focusNextYear(isoDate) : this.focusNextMonth(isoDate)
+        event.shiftKey
+          ? this.focusDate(isoDate.nextYear())
+          : this.focusDate(this.correspondingDateInAdjacentMonth(isoDate, 'next'))
         break
       case 'b':
-        this.focusPreviousMonth(isoDate)
+        this.focusDate(this.correspondingDateInAdjacentMonth(isoDate, 'previous'))
         break
       case 'B':
-        this.focusPreviousYear(isoDate)
+        this.focusDate(isoDate.previousYear())
         break
       case 'w':
-        this.focusNextMonth(isoDate)
+        this.focusDate(this.correspondingDateInAdjacentMonth(isoDate, 'next'))
         break
       case 'W':
-        this.focusNextYear(isoDate)
+        this.focusDate(isoDate.nextYear())
         break
     }
   }
@@ -420,46 +424,6 @@ export default class Datepicker extends Controller {
     if (!button.hasAttribute('aria-disabled')) {
       this.setToggleAriaLabel(`${this.text('changeDate')}, ${this.format(isoDate.toString())}`)
     }
-  }
-
-  focusSameDayPreviousWeek(isoDate) {
-    this.focusDate(isoDate.previousWeek())
-  }
-
-  focusSameDayNextWeek(isoDate) {
-    this.focusDate(isoDate.nextWeek())
-  }
-
-  focusPreviousDay(isoDate) {
-    this.focusDate(isoDate.previousDay())
-  }
-
-  focusNextDay(isoDate) {
-    this.focusDate(isoDate.nextDay())
-  }
-
-  focusFirstDayOfWeek(isoDate) {
-    this.focusDate(isoDate.firstDayOfWeek(this.firstDayOfWeekValue))
-  }
-
-  focusLastDayOfWeek(isoDate) {
-    this.focusDate(isoDate.lastDayOfWeek(this.firstDayOfWeekValue))
-  }
-
-  focusPreviousMonth(isoDate) {
-    this.focusDate(this.correspondingDateInAdjacentMonth(isoDate, 'previous'))
-  }
-
-  focusNextMonth(isoDate) {
-    this.focusDate(this.correspondingDateInAdjacentMonth(isoDate, 'next'))
-  }
-
-  focusPreviousYear(isoDate) {
-    this.focusDate(isoDate.previousYear())
-  }
-
-  focusNextYear(isoDate) {
-    this.focusDate(isoDate.nextYear())
   }
 
   correspondingDateInAdjacentMonth(isoDate, direction) {

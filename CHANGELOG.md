@@ -3,6 +3,8 @@
 
 ## Unreleased
 
+* Inline one-liner functions.
+
 
 ## v1.0.0 (25 May 2022)
 
