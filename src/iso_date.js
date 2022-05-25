@@ -59,28 +59,30 @@ export default class IsoDate {
     return this.increment('yyyy', 1)
   }
 
-  // Same day of month
-  previousMonth() {
-    return this.increment('mm', -1)
+  // @param [Boolean] whether to return the same day in the previous month (true)
+  //    or the same day of the week in the previous month (false).
+  previousMonth(sameDayOfMonth = true) {
+    if (sameDayOfMonth) {
+      return this.increment('mm', -1)
+    } else {
+      const month = this.mm
+      let isoDate = this.increment('dd', -28)
+      if (isoDate.mm == month) isoDate = isoDate.increment('dd', -7)
+      return isoDate
+    }
   }
 
-  // Same day of month
-  nextMonth() {
-    return this.increment('mm', 1)
-  }
-
-  previousMonthSameDayOfWeek() {
-    const month = this.mm
-    let isoDate = this.increment('dd', -28)
-    if (isoDate.mm == month) isoDate = isoDate.increment('dd', -7)
-    return isoDate
-  }
-
-  nextMonthSameDayOfWeek() {
-    const month = this.mm
-    let isoDate = this.increment('dd', 28)
-    if (isoDate.mm == month) isoDate = isoDate.increment('dd', 7)
-    return isoDate
+  // @param [Boolean] whether to return the same day in the next month (true)
+  //    or the same day of the week in the next month (false).
+  nextMonth(sameDayOfMonth = true) {
+    if (sameDayOfMonth) {
+      return this.increment('mm', 1)
+    } else {
+      const month = this.mm
+      let isoDate = this.increment('dd', 28)
+      if (isoDate.mm == month) isoDate = isoDate.increment('dd', 7)
+      return isoDate
+    }
   }
 
   previousWeek() {

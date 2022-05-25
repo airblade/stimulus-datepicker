@@ -175,14 +175,14 @@ export default class Datepicker extends Controller {
   gotoPrevMonth() {
     const isoDate = this.dateFromMonthYearSelectsAndDayGrid()
     this.close(false)
-    this.open(false, this.previousMonth(isoDate))
+    this.open(false, isoDate.previousMonth(this.monthJumpValue == 'dayOfMonth'))
     this.prevMonthTarget.focus()
   }
 
   gotoNextMonth() {
     const isoDate = this.dateFromMonthYearSelectsAndDayGrid()
     this.close(false)
-    this.open(false, this.nextMonth(isoDate))
+    this.open(false, isoDate.nextMonth(this.monthJumpValue == 'dayOfMonth'))
     this.nextMonthTarget.focus()
   }
 
@@ -355,21 +355,21 @@ export default class Datepicker extends Controller {
       case 'PageUp':
         event.shiftKey
           ? this.focusDate(isoDate.previousYear())
-          : this.focusDate(this.previousMonth(isoDate))
+          : this.focusDate(isoDate.previousMonth(this.monthJumpValue == 'dayOfMonth'))
         break
       case 'PageDown':
         event.shiftKey
           ? this.focusDate(isoDate.nextYear())
-          : this.focusDate(this.nextMonth(isoDate))
+          : this.focusDate(isoDate.nextMonth(this.monthJumpValue == 'dayOfMonth'))
         break
       case 'b':
-        this.focusDate(this.previousMonth(isoDate))
+        this.focusDate(isoDate.previousMonth(this.monthJumpValue == 'dayOfMonth'))
         break
       case 'B':
         this.focusDate(isoDate.previousYear())
         break
       case 'w':
-        this.focusDate(this.nextMonth(isoDate))
+        this.focusDate(isoDate.nextMonth(this.monthJumpValue == 'dayOfMonth'))
         break
       case 'W':
         this.focusDate(isoDate.nextYear())
@@ -424,18 +424,6 @@ export default class Datepicker extends Controller {
     if (!button.hasAttribute('aria-disabled')) {
       this.setToggleAriaLabel(`${this.text('changeDate')}, ${this.format(isoDate.toString())}`)
     }
-  }
-
-  previousMonth(isoDate) {
-    return this.monthJumpValue == 'dayOfMonth'
-         ? isoDate.previousMonth()
-         : isoDate.previousMonthSameDayOfWeek()
-  }
-
-  nextMonth(isoDate) {
-    return this.monthJumpValue == 'dayOfMonth'
-         ? isoDate.nextMonth()
-         : isoDate.nextMonthSameDayOfWeek()
   }
 
   // @param selected [Number] the selected month (January is 1)

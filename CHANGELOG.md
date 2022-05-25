@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+* Move conditional month logic into model.
 * Refactor some controller internals.
 
 
