@@ -8,16 +8,16 @@ export default class Datepicker extends Controller {
     'month', 'year', 'prevMonth', 'today', 'nextMonth', 'days']
 
   static values = {
-    date:              String,
-    min:               String,
-    max:               String,
-    format:            {type: String, default: '%Y-%m-%d'},
-    firstDayOfWeek:    {type: Number, default: 1},
-    dayNameLength:     {type: Number, default: 2},
-    allowWeekends:     {type: Boolean, default: true},
-    monthJump:         {type: String, default: 'dayOfMonth'},
-    disallow:          Array,
-    text:              Object
+    date:           String,
+    min:            String,
+    max:            String,
+    format:         {type: String, default: '%Y-%m-%d'},
+    firstDayOfWeek: {type: Number, default: 1},
+    dayNameLength:  {type: Number, default: 2},
+    allowWeekends:  {type: Boolean, default: true},
+    monthJump:      {type: String, default: 'dayOfMonth'},
+    disallow:       Array,
+    text:           Object
   }
 
   static defaultTextValue = {
