@@ -3,7 +3,7 @@
 
 ## Unreleased
 
-* Inline one-liner functions.
+* Refactor some controller internals.
 
 
 ## v1.0.0 (25 May 2022)

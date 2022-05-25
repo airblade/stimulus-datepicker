@@ -172,21 +172,21 @@ export default class Datepicker extends Controller {
     this.open(false, isoDate)
   }
 
-  prevMonth() {
+  gotoPrevMonth() {
     const isoDate = this.dateFromMonthYearSelectsAndDayGrid()
     this.close(false)
-    this.open(false, this.correspondingDateInAdjacentMonth(isoDate, 'previous'))
+    this.open(false, this.previousMonth(isoDate))
     this.prevMonthTarget.focus()
   }
 
-  nextMonth() {
+  gotoNextMonth() {
     const isoDate = this.dateFromMonthYearSelectsAndDayGrid()
     this.close(false)
-    this.open(false, this.correspondingDateInAdjacentMonth(isoDate, 'next'))
+    this.open(false, this.nextMonth(isoDate))
     this.nextMonthTarget.focus()
   }
 
-  today() {
+  gotoToday() {
     this.close(false)
     this.open(false, new IsoDate())
     this.todayTarget.focus()
@@ -224,17 +224,17 @@ export default class Datepicker extends Controller {
             </div>
           </div>
           <div class="sdp-nav-buttons">
-            <button class="sdp-goto-prev" data-datepicker-target="prevMonth" data-action="datepicker#prevMonth" title="${this.text('previousMonth')}" aria-label="${this.text('previousMonth')}">
+            <button class="sdp-goto-prev" data-datepicker-target="prevMonth" data-action="datepicker#gotoPrevMonth" title="${this.text('previousMonth')}" aria-label="${this.text('previousMonth')}">
               <svg viewBox="0 0 10 10">
                 <polyline points="7,1 3,5 7,9" />
               </svg>
             </button>
-            <button class="sdp-goto-today" data-datepicker-target="today" data-action="datepicker#today" title="${this.text('today')}" aria-label="${this.text('today')}">
+            <button class="sdp-goto-today" data-datepicker-target="today" data-action="datepicker#gotoToday" title="${this.text('today')}" aria-label="${this.text('today')}">
               <svg viewBox="0 0 10 10">
                 <circle cx="5" cy="5" r="4" />
               </svg>
             </button>
-            <button class="sdp-goto-next" data-datepicker-target="nextMonth" data-action="datepicker#nextMonth" title="${this.text('nextMonth')}" aria-label="${this.text('nextMonth')}">
+            <button class="sdp-goto-next" data-datepicker-target="nextMonth" data-action="datepicker#gotoNextMonth" title="${this.text('nextMonth')}" aria-label="${this.text('nextMonth')}">
               <svg viewBox="0 0 10 10">
                 <polyline points="3,1 7,5 3,9" />
               </svg>
@@ -355,21 +355,21 @@ export default class Datepicker extends Controller {
       case 'PageUp':
         event.shiftKey
           ? this.focusDate(isoDate.previousYear())
-          : this.focusDate(this.correspondingDateInAdjacentMonth(isoDate, 'previous'))
+          : this.focusDate(this.previousMonth(isoDate))
         break
       case 'PageDown':
         event.shiftKey
           ? this.focusDate(isoDate.nextYear())
-          : this.focusDate(this.correspondingDateInAdjacentMonth(isoDate, 'next'))
+          : this.focusDate(this.nextMonth(isoDate))
         break
       case 'b':
-        this.focusDate(this.correspondingDateInAdjacentMonth(isoDate, 'previous'))
+        this.focusDate(this.previousMonth(isoDate))
         break
       case 'B':
         this.focusDate(isoDate.previousYear())
         break
       case 'w':
-        this.focusDate(this.correspondingDateInAdjacentMonth(isoDate, 'next'))
+        this.focusDate(this.nextMonth(isoDate))
         break
       case 'W':
         this.focusDate(isoDate.nextYear())
@@ -406,9 +406,9 @@ export default class Datepicker extends Controller {
     if (!time) {
       const leadingDatetime = this.daysTarget.querySelector('time').getAttribute('datetime')
       if (isoDate.before(new IsoDate(leadingDatetime))) {
-        this.prevMonth()
+        this.gotoPrevMonth()
       } else {
-        this.nextMonth()
+        this.gotoNextMonth()
       }
       this.focusDate(isoDate)
       return
@@ -426,16 +426,16 @@ export default class Datepicker extends Controller {
     }
   }
 
-  correspondingDateInAdjacentMonth(isoDate, direction) {
-    if (direction == 'previous') {
-      return this.monthJumpValue == 'dayOfMonth'
-        ? isoDate.previousMonth()
-        : isoDate.previousMonthSameDayOfWeek()
-    } else {
-      return this.monthJumpValue == 'dayOfMonth'
-        ? isoDate.nextMonth()
-        : isoDate.nextMonthSameDayOfWeek()
-    }
+  previousMonth(isoDate) {
+    return this.monthJumpValue == 'dayOfMonth'
+         ? isoDate.previousMonth()
+         : isoDate.previousMonthSameDayOfWeek()
+  }
+
+  nextMonth(isoDate) {
+    return this.monthJumpValue == 'dayOfMonth'
+         ? isoDate.nextMonth()
+         : isoDate.nextMonthSameDayOfWeek()
   }
 
   // @param selected [Number] the selected month (January is 1)
