@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+* Move all colours into CSS custom properties.
 * Allow configuration of text.
 * Move dropdown arrows a little higher.
 

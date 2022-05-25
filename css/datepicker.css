@@ -1,9 +1,17 @@
 :root {
-  --sdp-color: #005fcc;
-  --sdp-invert-color: #fff;
-  --sdp-shadow-color: 0deg 0% 50%;
+  --sdp-selected: #005fcc;
+  --sdp-selected-invert: #ffffff;
+  --sdp-prev-month: #888888;
+  --sdp-next-month: #888888;
   --sdp-disabled: #1010104d;
-  --sdp-disabled-invert: #fff;
+  --sdp-disabled-invert: #ffffff;
+  --sdp-background: #ffffff;
+  --sdp-border: #dddddd;
+  --sdp-shadow: 0deg 0% 50%;
+  --sdp-icon: #4a4a4acc;
+  --sdp-nav-button-background: #f5f5f5;
+  --sdp-nav-button-background-hover: #eeeeee;
+  --sdp-days-of-week: #4a4a4a;
 }
 
 @keyframes fadeIn {
@@ -36,11 +44,11 @@
   margin-top: 5px;
   box-sizing: border-box;
   width: fit-content;
-  border: 1px solid #ddd;
+  border: 1px solid var(--sdp-border);
   border-radius: 5px;
   padding: 15px;
-  background: white;
-  box-shadow: 0 1.25em 1.25em -0.9375em hsl(var(--sdp-shadow-color) / 0.3);
+  background: var(--sdp-background);
+  box-shadow: 0 1.25em 1.25em -0.9375em hsl(var(--sdp-shadow) / 0.3);
 }
 .sdp-cal.fade-in {
   animation: fadeIn 0.1s ease-out;
@@ -71,7 +79,7 @@
 .sdp-nav-dropdowns select {
   -moz-appearance: none;
   -webkit-appearance: none;
-  background: white;
+  background: var(--sdp-background);
   color: currentColor;
   padding: 1px 12px 1px 1px;
   border: 1px solid transparent;
@@ -85,7 +93,7 @@
 }
 .sdp-nav-dropdowns > div::after {
   content: " ";
-  border: 2px solid #4a4a4acc;
+  border: 2px solid var(--sdp-icon);
   border-top: 0;
   border-right: 0;
   width: 0.3em;
@@ -101,12 +109,12 @@
   border-radius: 50%;
   width: 1.5em;
   height: 1.5em;
-  color: #4a4a4acc;
-  background-color: #f5f5f5;
+  color: var(--sdp-icon);
+  background-color: var(--sdp-nav-button-background);
   cursor: pointer;
 }
 .sdp-nav-buttons button:hover {
-  background-color: #eee;
+  background-color: var(--sdp-nav-button-background-hover);
 }
 .sdp-nav-buttons svg {
   fill: none;
@@ -132,7 +140,7 @@
 .sdp-days-of-week div {
   text-transform: uppercase;
   font-size: 0.8em;
-  color: #4a4a4a;
+  color: var(--sdp-days-of-week);
   font-weight: 600;
 }
 
@@ -151,8 +159,8 @@
 }
 
 .sdp-days button:not([aria-disabled]).sdp-selected {
-  background-color: var(--sdp-color);
-  color: var(--sdp-invert-color);
+  background-color: var(--sdp-selected);
+  color: var(--sdp-selected-invert);
 }
 .sdp-days button[aria-disabled].sdp-selected {
   background-color: var(--sdp-disabled);
@@ -160,7 +168,7 @@
 }
 
 .sdp-days button:not([aria-disabled]).sdp-today {
-  border: 1px solid var(--sdp-color);
+  border: 1px solid var(--sdp-selected);
 }
 .sdp-days button[aria-disabled].sdp-today {
   border: 1px solid var(--sdp-disabled);
@@ -178,7 +186,7 @@
 
 .sdp-days button:not([aria-disabled]):hover,
 .sdp-days button:not([aria-disabled]):focus {
-  border: 2px solid var(--sdp-color);
+  border: 2px solid var(--sdp-selected);
 }
 .sdp-days button[aria-disabled]:hover,
 .sdp-days button[aria-disabled]:focus {
@@ -187,8 +195,8 @@
 
 .sdp-days button:not([aria-disabled]).sdp-selected:hover,
 .sdp-days button:not([aria-disabled]).sdp-selected:focus {
-  border: 2px solid var(--sdp-invert-color);
-  box-shadow: 0 0 0 2px var(--sdp-color);
+  border: 2px solid var(--sdp-selected-invert);
+  box-shadow: 0 0 0 2px var(--sdp-selected);
 }
 .sdp-days button[aria-disabled].sdp-selected:hover,
 .sdp-days button[aria-disabled].sdp-selected:focus {
@@ -198,16 +206,18 @@
 
 .sdp-days button:not([aria-disabled]).sdp-today:hover,
 .sdp-days button:not([aria-disabled]).sdp-today:focus {
-  border: 2px solid var(--sdp-color);
+  border: 2px solid var(--sdp-selected);
 }
 .sdp-days button[aria-disabled].sdp-today:hover,
 .sdp-days button[aria-disabled].sdp-today:focus {
   border: 2px solid var(--sdp-disabled);
 }
 
-.sdp-days button:not([aria-disabled]).sdp-prev-month,
+.sdp-days button:not([aria-disabled]).sdp-prev-month {
+  color: var(--sdp-prev-month);
+}
 .sdp-days button:not([aria-disabled]).sdp-next-month {
-  color: #888;
+  color: var(--sdp-next-month);
 }
 .sdp-days button[aria-disabled].sdp-prev-month,
 .sdp-days button[aria-disabled].sdp-next-month {

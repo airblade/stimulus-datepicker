@@ -14,7 +14,7 @@ Month and day names are generated in the user's locale.  Button titles and ARIA 
 
 Dates are local; no timezones or daylight savings are involved.
 
-The calendar is minimally styled so you can easily adjust its appearance with a little CSS.
+You can easily adjust the calendar's appearance via CSS custom properties or just overriding the CSS classes.
 
 Size: JS 3.6kB minified and gzipped, CSS 2.7kB gzipped.
 
@@ -135,6 +135,27 @@ The datepicker is fully navigable by keyboard.  In addition to the WAI-ARIA keys
 
 - `"dayOfMonth"`: the corresponding date is the same date, e.g. 7th;
 - `"dayOfWeek"`: the corresponding date is the same day of the week, four weeks earlier/later.
+
+
+## CSS
+
+You can alter the appearance of the calendar by setting these custom properties, or of course by just overriding the CSS classes.
+
+| Property | Default | Description |
+|--|--|--|
+| `--sdp-selected` | `#005fcc` | Background colour of selected date; colour of date focus ring. |
+| `--sdp-selected-invert` | `#ffffff` | Colour of selected date. |
+| `--sdp-prev-month` | `#888888` | Colour of dates in the previous month. |
+| `--sdp-next-month` | `#888888` | Colour of dates in the next month. |
+| `--sdp-disabled` | `#1010104d` | Colour of disabled dates; background color of selected date when disabled. |
+| `--sdp-disabled-invert` | `#ffffff` | Colour of selected date when disabled. |
+| `--sdp-background` | `#ffffff` | Background colour. |
+| `--sdp-border` | `#dddddd` | Border colour. |
+| `--sdp-shadow` | `0deg 0% 50%` | Box shadow colour (hsl). |
+| `--sdp-icon` | `#4a4a4acc` | Colour of the icons, e.g. previous-month button. |
+| `--sdp-nav-button-background` | `#f5f5f5` | Background colour of the navigation buttons. |
+| `--sdp-nav-button-background-hover` | `#eeeeee` | Background colour on hover of the navigation buttons. |
+| `--sdp-days-of-week` | `#4a4a4a` | Colour of the days of the week. |
 
 
 ## Intellectual Property
