@@ -355,21 +355,21 @@ export default class Datepicker extends Controller {
       case 'PageUp':
         event.shiftKey
           ? this.focusDate(isoDate.previousYear())
-          : this.focusDate(isoDate.previousMonth(this.monthJumpValue == 'dayOfMonth'))
+          : this.focusDate(isoDate.previousMonth(this.monthJumpIsDayOfMonth()))
         break
       case 'PageDown':
         event.shiftKey
           ? this.focusDate(isoDate.nextYear())
-          : this.focusDate(isoDate.nextMonth(this.monthJumpValue == 'dayOfMonth'))
+          : this.focusDate(isoDate.nextMonth(this.monthJumpIsDayOfMonth()))
         break
       case 'b':
-        this.focusDate(isoDate.previousMonth(this.monthJumpValue == 'dayOfMonth'))
+        this.focusDate(isoDate.previousMonth(this.monthJumpIsDayOfMonth()))
         break
       case 'B':
         this.focusDate(isoDate.previousYear())
         break
       case 'w':
-        this.focusDate(isoDate.nextMonth(this.monthJumpValue == 'dayOfMonth'))
+        this.focusDate(isoDate.nextMonth(this.monthJumpIsDayOfMonth()))
         break
       case 'W':
         this.focusDate(isoDate.nextYear())
@@ -384,6 +384,11 @@ export default class Datepicker extends Controller {
   lastTabStop() {
     return this.calendarTarget.querySelector('.sdp-days button[tabindex="0"]')
   }
+
+  monthJumpIsDayOfMonth() {
+    return this.monthJumpValue == 'dayOfMonth'
+  }
+
 
   // @param isoDate [isoDate] the date to select
   selectDate(isoDate) {
