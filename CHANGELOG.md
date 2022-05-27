@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+* Use annotated git tags for releases.
 * Move conditional month logic into model.
 * Refactor some controller internals.
 
