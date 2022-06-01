@@ -3,6 +3,9 @@
 
 ## Unreleased
 
+
+## v1.0.1 (1 June 2022)
+
 * Do not use private class methods.
 * Use annotated git tags for releases.
 * Move conditional month logic into model.

@@ -1,6 +1,6 @@
 {
   "name": "stimulus-datepicker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "StimulusJS datepicker component",
   "author": "Andrew Stewart <boss@airbladesoftware.com>",
   "type": "module",
