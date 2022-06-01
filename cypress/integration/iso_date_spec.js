@@ -244,17 +244,10 @@ describe('IsoDate', () => {
   })
 
   it('isLeapYear()', () => {
-    // assert.isFalse(IsoDate.isLeapYear(2022))
-    // assert.isTrue(IsoDate.isLeapYear(2024))
-    // assert.isTrue(IsoDate.isLeapYear(2000))
-    // assert.isFalse(IsoDate.isLeapYear(2100))
-
-    // Having made the leap year function private, we can only test it indirectly.
-    assert.isFalse(IsoDate.isValidDate(2022, 2, 29))
-    assert.isTrue(IsoDate.isValidDate(2024, 2, 29))
-    assert.isTrue(IsoDate.isValidDate(2000, 2, 29))
-    assert.isFalse(IsoDate.isValidDate(2100, 2, 29))
-
+    assert.isFalse(IsoDate.isLeapYear(2022))
+    assert.isTrue(IsoDate.isLeapYear(2024))
+    assert.isTrue(IsoDate.isLeapYear(2000))
+    assert.isFalse(IsoDate.isLeapYear(2100))
   })
 
 })
