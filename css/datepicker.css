@@ -48,7 +48,7 @@
   border-radius: 5px;
   padding: 15px;
   background: var(--sdp-background);
-  box-shadow: 0 1.25em 1.25em -0.9375em hsl(var(--sdp-shadow) / 0.3);
+  box-shadow: 0 1.25em 1.25em -0.9375em hsl(#{var(--sdp-shadow) / 0.3});
 }
 .sdp-cal.fade-in {
   animation: fadeIn 0.1s ease-out;
