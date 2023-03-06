@@ -199,6 +199,11 @@ export default class Datepicker extends Controller {
     const year  = this.yearTarget.value
     const month = this.monthTarget.value
     const day   = this.daysTarget.querySelector('button[tabindex="0"] time').textContent
+    const isValid = IsoDate.isValidDate(year, month, day);
+    if (!isValid) {
+      day = 1;
+    }
+
     return new IsoDate(year, month, day)
   }
 
