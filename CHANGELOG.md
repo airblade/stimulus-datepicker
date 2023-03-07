@@ -3,6 +3,9 @@
 
 ## Unreleased
 
+
+## v1.0.2 (7 March 2023)
+
 * Fix edge case using month dropdown. (#17)
 
 
