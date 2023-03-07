@@ -198,11 +198,10 @@ export default class Datepicker extends Controller {
   dateFromMonthYearSelectsAndDayGrid() {
     const year  = this.yearTarget.value
     const month = this.monthTarget.value
-    const day   = this.daysTarget.querySelector('button[tabindex="0"] time').textContent
-    const isValid = IsoDate.isValidDate(year, month, day);
-    if (!isValid) {
-      day = 1;
-    }
+    let day     = this.daysTarget.querySelector('button[tabindex="0"] time').textContent
+
+    const daysInMonth = IsoDate.daysInMonth(+month, +year)
+    if (day > daysInMonth) day = daysInMonth
 
     return new IsoDate(year, month, day)
   }
