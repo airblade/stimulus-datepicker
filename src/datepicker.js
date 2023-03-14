@@ -617,7 +617,7 @@ export default class Datepicker extends Controller {
     const names = []
     // Ensure date in month is two digits. 2022-04-10 is a Sunday
     for (let i = this.firstDayOfWeekValue + 10, n = i + 7; i < n; i++) {
-      names.push(formatter.format(new Date(`2022-04-${i}T00:00:00+00:00`)))
+      names.push(formatter.format(new Date(`2022-04-${i}T00:00:00`)))
     }
     return names
   }
