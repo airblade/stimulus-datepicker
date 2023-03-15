@@ -4,6 +4,11 @@
 ## Unreleased
 
 
+## v1.0.3 (15 March 2023)
+
+* Fix weekday off-by-one in different timezone. (#20)
+
+
 ## v1.0.2 (7 March 2023)
 
 * Fix edge case using month dropdown. (#17)
