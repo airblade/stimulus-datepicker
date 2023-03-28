@@ -3,6 +3,9 @@
 
 ## Unreleased
 
+
+## v1.0.4 (28 March 2023)
+
 * Move dispatch of change event to after input date. (#21)
 
 
