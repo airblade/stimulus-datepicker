@@ -3,6 +3,9 @@
 
 ## Unreleased
 
+
+## v1.0.5 (6 July 2023)
+
 * Only dispatch change event if value changed. (#23)
 
 
