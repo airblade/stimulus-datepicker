@@ -35,6 +35,6 @@
     "start": "http-server ./cypress/fixtures -p 3030",
     "cypress": "cypress open",
     "cypress_tz": "TZ=America/New_York cypress open",
-    "release": "git tag -a -m 'Version $npm_package_version' v$npm_package_version && git push && git push --tags && npm login && npm publish && echo 'Remember to update version on demo page'"
+    "release": "git tag -a -m \"Version $npm_package_version\" v$npm_package_version && git push && git push --tags && npm login && npm publish && echo 'Remember to update version on demo page'"
   }
 }
