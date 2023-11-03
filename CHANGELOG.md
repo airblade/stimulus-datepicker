@@ -3,6 +3,8 @@
 
 ## Unreleased
 
+* Update installation instructions.
+
 
 ## v1.0.5 (6 July 2023)
 

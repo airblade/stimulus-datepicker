@@ -23,22 +23,33 @@ Size: JS 3.6kB minified and gzipped, CSS 2.7kB gzipped.
 
 ## Installation
 
+The project contains JavaScript and CSS.  If you only use importmaps, i.e. you don't use jsbundling-rails or cssbundling-rails, first install the JavaScript:
+
 ```
-yarn add stimulus-datepicker
+bin/importmap pin stimulus-datepicker
 ```
 
+And then add a link to the stylesheet to your view:
 
-## Usage
+```
+<link rel="stylesheet" href="https://unpkg.com/stimulus-datepicker@1.0.5/css/datepicker.css" data-turbo-track="reload">
+```
 
-Register the datepicker controller with your Stimulus application:
+If you use jsbundling-rails or cssbundling-rails, follow their instructions for installing packages.
+
+Then register the datepicker controller with your Stimulus application:
 
 ```diff
+  // app/javascript/controllers/application.js
+
   import { Application } from '@hotwired/stimulus'
 + import { Datepicker } from 'stimulus-datepicker'
 
   const application = Application.start()
 + application.register('datepicker', Datepicker)
 ```
+
+## Usage
 
 To use the datepicker, wrap your input field with a controller div.
 
