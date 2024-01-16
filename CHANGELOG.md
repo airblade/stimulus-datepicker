@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+* Allow specifying locale.
 * Update installation instructions.
 
 
