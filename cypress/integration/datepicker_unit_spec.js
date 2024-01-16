@@ -5,8 +5,11 @@ describe('Stimulus datepicker', () => {
 
   const controller = new Datepicker()
 
+  beforeEach(() => {
+    controller.localesValue = 'en-GB'
+  })
+
   it('dayNames', () => {
-    // assume locale is en
     controller.firstDayOfWeekValue = 1
     assert.equal(controller.dayNames('long').length, 7)
     assert.equal(controller.dayNames('long')[0], 'Monday')
@@ -15,10 +18,13 @@ describe('Stimulus datepicker', () => {
     controller.firstDayOfWeekValue = 5
     assert.equal(controller.dayNames('long')[0], 'Friday')
     assert.equal(controller.dayNames('long')[6], 'Thursday')
+
+    controller.localesValue = 'de-DE'
+    assert.equal(controller.dayNames('long')[0], 'Freitag')
+    assert.equal(controller.dayNames('long')[6], 'Donnerstag')
   })
 
   it('monthNames', () => {
-    // assume locale is en
     assert.equal(controller.monthNames('long').length, 12)
     assert.equal(controller.monthNames('long')[0], 'January')
     assert.equal(controller.monthNames('long')[11], 'December')
@@ -26,10 +32,18 @@ describe('Stimulus datepicker', () => {
     assert.equal(controller.monthNames('short').length, 12)
     assert.equal(controller.monthNames('short')[0], 'Jan')
     assert.equal(controller.monthNames('short')[11], 'Dec')
+
+    controller.localesValue = 'de-DE'
+    assert.equal(controller.monthNames('long').length, 12)
+    assert.equal(controller.monthNames('long')[0], 'Januar')
+    assert.equal(controller.monthNames('long')[11], 'Dezember')
+
+    assert.equal(controller.monthNames('short').length, 12)
+    assert.equal(controller.monthNames('short')[0], 'Jan')
+    assert.equal(controller.monthNames('short')[11], 'Dez')
   })
 
   it('monthNumber', () => {
-    // assume locale is en
     assert.equal(controller.monthNumber('January', 'long'), 1)
     assert.equal(controller.monthNumber('x', 'long'), 0)
     assert.equal(controller.monthNumber('Jan', 'short'), 1)
@@ -37,8 +51,11 @@ describe('Stimulus datepicker', () => {
   })
 
   it('localisedMonth', () => {
-    // assume locale is en
     assert.equal(controller.localisedMonth(1, 'long'), 'January')
+    assert.equal(controller.localisedMonth(1, 'short'), 'Jan')
+
+    controller.localesValue = 'de-DE'
+    assert.equal(controller.localisedMonth(1, 'long'), 'Januar')
     assert.equal(controller.localisedMonth(1, 'short'), 'Jan')
   })
 
@@ -49,11 +66,9 @@ describe('Stimulus datepicker', () => {
     controller.formatValue = '%-d %-m %y'
     assert.equal(controller.parse('5 3 22'), '2022-03-05')
 
-    // assume locale is en
     controller.formatValue = '%d %B %Y'
     assert.equal(controller.parse('05 March 2022'), '2022-03-05')
 
-    // assume locale is en
     controller.formatValue = '%d %b %Y'
     assert.equal(controller.parse('05 Mar 2022'), '2022-03-05')
 
@@ -71,11 +86,9 @@ describe('Stimulus datepicker', () => {
     controller.formatValue = '%-d %-m %y'
     assert.equal(controller.format('2022-03-05'), '5 3 22')
 
-    // assume locale is en
     controller.formatValue = '%d %B %Y'
     assert.equal(controller.format('2022-03-05'), '05 March 2022')
 
-    // assume locale is en
     controller.formatValue = '%d %b %Y'
     assert.equal(controller.format('2022-03-05'), '05 Mar 2022')
 
