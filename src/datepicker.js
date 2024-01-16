@@ -18,9 +18,7 @@ export default class Datepicker extends Controller {
     monthJump:      {type: String, default: 'dayOfMonth'},
     disallow:       Array,
     text:           Object,
-    // corresponsds to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat
-    // => locales parameter
-    locales:        { type: Array, default: ['default'] }
+    locales:        {type: Array, default: ['default']}
   }
 
   static defaultTextValue = {
@@ -579,7 +577,7 @@ export default class Datepicker extends Controller {
     return new IsoDate(parts.year, parts.month, parts.day).toString()
   }
 
-  // Returns the name of the month in the current locale.
+  // Returns the name of the month in the configured locale.
   //
   // @param month [Number] the month number (January is 1)
   // @param monthFormat [String] "long" (January) | "short" (Jan)
@@ -598,7 +596,7 @@ export default class Datepicker extends Controller {
     return this.monthNames(monthFormat).findIndex(m => name.includes(m)) + 1
   }
 
-  // Returns the month names in the the current locale.
+  // Returns the month names in the configured locale.
   //
   // @param format [String] "long" (January) | "short" (Jan)
   // @return [Array] localised month names
@@ -610,7 +608,7 @@ export default class Datepicker extends Controller {
     )
   }
 
-  // Returns the day names in the current locale, starting with the
+  // Returns the day names in the configured locale, starting with the
   // firstDayOfTheWeekValue.
   //
   // @param format [String] "long" (Monday) | "short" (Mon) | "narrow" (M)
