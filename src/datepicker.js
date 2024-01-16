@@ -17,7 +17,10 @@ export default class Datepicker extends Controller {
     allowWeekends:  {type: Boolean, default: true},
     monthJump:      {type: String, default: 'dayOfMonth'},
     disallow:       Array,
-    text:           Object
+    text:           Object,
+    // corresponsds to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat
+    // => locales parameter
+    locales:        { type: Array, default: ['default'] }
   }
 
   static defaultTextValue = {
@@ -583,7 +586,7 @@ export default class Datepicker extends Controller {
   // @return [String] the localised month name
   localisedMonth(month, monthFormat) {
     // Use the middle of the month to avoid timezone edge cases
-    return new Date(`2022-${month}-15`).toLocaleString('default', {month: monthFormat})
+    return new Date(`2022-${month}-15`).toLocaleString(this.localesValue, {month: monthFormat})
   }
 
   // Returns the number of the month (January is 1).
@@ -600,7 +603,7 @@ export default class Datepicker extends Controller {
   // @param format [String] "long" (January) | "short" (Jan)
   // @return [Array] localised month names
   monthNames(format) {
-    const formatter = new Intl.DateTimeFormat('default', {month: format})
+    const formatter = new Intl.DateTimeFormat(this.localesValue, {month: format})
     return ['01','02','03','04','05','06','07','08','09','10','11','12'].map(mm =>
       // Use the middle of the month to avoid timezone edge cases
       formatter.format(new Date(`2022-${mm}-15`))
@@ -613,7 +616,7 @@ export default class Datepicker extends Controller {
   // @param format [String] "long" (Monday) | "short" (Mon) | "narrow" (M)
   // @return [Array] localised day names
   dayNames(format) {
-    const formatter = new Intl.DateTimeFormat('default', {weekday: format})
+    const formatter = new Intl.DateTimeFormat(this.localesValue, {weekday: format})
     const names = []
     // Ensure date in month is two digits. 2022-04-10 is a Sunday
     for (let i = this.firstDayOfWeekValue + 10, n = i + 7; i < n; i++) {
