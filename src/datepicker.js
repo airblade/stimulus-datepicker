@@ -45,11 +45,12 @@ export default class Datepicker extends Controller {
 
   dateValueChanged(value, previousValue) {
     if (!this.hasHiddenTarget) return
+    const dispatchChangeEvent = value != this.hiddenTarget.value;
     this.hiddenTarget.value = value
     this.inputTarget.value = this.format(value)
     // Trigger change event on input when user selects date from picker.
     // http://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event
-    if (value != previousValue) this.inputTarget.dispatchEvent(new Event('change'))
+    if (dispatchChangeEvent) this.inputTarget.dispatchEvent(new Event('change'))
     this.validate(value)
   }
 
@@ -79,6 +80,7 @@ export default class Datepicker extends Controller {
     this.inputTarget.insertAdjacentHTML('afterend', `
       <input type="hidden"
              name="${this.inputTarget.getAttribute('name')}"
+             value="${this.inputTarget.value}"
              data-datepicker-target="hidden"/>
     `)
   }
