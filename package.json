@@ -6,7 +6,11 @@
   "type": "module",
   "main": "src/datepicker.js",
   "source": "src/datepicker.js",
-  "exports": "./src/datepicker.js",
+  "files": [
+    "css/",
+    "src/"
+  ],
+  "style": "css/datepicker.css",
   "license": "MIT",
   "keywords": [
     "stimulus",
