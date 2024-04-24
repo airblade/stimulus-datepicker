@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+* Fix no animation when CSS sets animation: none. (#14)
 * Fix missing open animation.
 * Fix no animation when prefers-reduced-motion. (#14)
 

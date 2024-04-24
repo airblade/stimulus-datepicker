@@ -34,14 +34,6 @@
     opacity: 0;
   }
 }
-@keyframes noop {
-  from {
-    transform: translateX(0%);
-  }
-  to {
-    transform: translateX(0%);
-  }
-}
 
 [data-controller="datepicker"] {
   position: relative;
@@ -66,7 +58,7 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .sdp-cal.fade-in, .sdp-cal.fade-out {
-    animation: noop;
+    animation: none;
   }
 }
 .sdp-cal button {

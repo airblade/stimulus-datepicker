@@ -123,8 +123,12 @@ export default class Datepicker extends Controller {
 
   close(animate) {
     if (animate) {
-      this.calendarTarget.onanimationend = e => e.target.remove()
       this.calendarTarget.classList.add('fade-out')
+      if (this.hasCssAnimation(this.calendarTarget)) {
+        this.calendarTarget.onanimationend = e => e.target.remove()
+      } else {
+        this.calendarTarget.remove()
+      }
     } else {
       this.calendarTarget.remove()
     }
@@ -259,8 +263,12 @@ export default class Datepicker extends Controller {
     `
     this.element.insertAdjacentHTML('beforeend', cal)
     if (animate) {
-      this.calendarTarget.onanimationend = e => this.calendarTarget.classList.remove('fade-in')
       this.calendarTarget.classList.add('fade-in')
+      if (this.hasCssAnimation(this.calendarTarget)) {
+        this.calendarTarget.onanimationend = e => this.calendarTarget.classList.remove('fade-in')
+      } else {
+        this.calendarTarget.classList.remove('fade-in')
+      }
     }
   }
 
@@ -625,6 +633,10 @@ export default class Datepicker extends Controller {
       names.push(formatter.format(new Date(`2022-04-${i}T00:00:00`)))
     }
     return names
+  }
+
+  hasCssAnimation(el) {
+    return window.getComputedStyle(el).getPropertyValue('animation-name') !== 'none';
   }
 
 }
