@@ -3,6 +3,8 @@
 
 ## Unreleased
 
+* Fix no animation when prefers-reduced-motion. (#14)
+
 
 ## v1.0.6 (16 January 2024)
 
