@@ -64,7 +64,7 @@
 .sdp-cal.fade-out {
   animation: fadeOut 0.1s ease-out;
 }
-@media (prefers-reduced-motion) {
+@media (prefers-reduced-motion: reduce) {
   .sdp-cal.fade-in, .sdp-cal.fade-out {
     animation: noop;
   }
