@@ -133,7 +133,7 @@ export default class Datepicker extends Controller {
   }
 
   open(animate, isoDate = this.initialIsoDate()) {
-    this.render(isoDate)
+    this.render(isoDate, animate)
     this.focusDate(isoDate)
   }
 
@@ -215,7 +215,7 @@ export default class Datepicker extends Controller {
   // Does not focus the given date.
   //
   // @param isoDate [IsoDate] the date of interest
-  render(isoDate) {
+  render(isoDate, animate) {
     const cal = `
       <div class="sdp-cal" data-datepicker-target="calendar" data-action="click@window->datepicker#closeOnOutsideClick keydown->datepicker#key" role="dialog" aria-modal="true" aria-label="${this.text('chooseDate')}">
         <div class="sdp-nav">
@@ -258,6 +258,10 @@ export default class Datepicker extends Controller {
       </div>
     `
     this.element.insertAdjacentHTML('beforeend', cal)
+    if (animate) {
+      this.calendarTarget.onanimationend = e => this.calendarTarget.classList.remove('fade-in')
+      this.calendarTarget.classList.add('fade-in')
+    }
   }
 
   monthTargetConnected() {
