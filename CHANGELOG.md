@@ -3,6 +3,9 @@
 
 ## Unreleased
 
+
+## v1.0.7 (24 April 2024)
+
 * Fix no animation when CSS sets animation: none. (#14)
 * Fix missing open animation.
 * Fix no animation when prefers-reduced-motion. (#14)
