@@ -3,6 +3,8 @@
 
 ## Unreleased
 
+* Do not fire change event when controller connects. (#28)
+
 
 ## v1.0.7 (24 April 2024)
 
