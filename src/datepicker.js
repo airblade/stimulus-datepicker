@@ -290,8 +290,8 @@ export default class Datepicker extends Controller {
     tempSelect.style.cssText += 'visibility: hidden; position: fixed;'
     tempSelect.appendChild(tempOption)
     select.after(tempSelect)
-    const tempSelectWidth = tempSelect.getBoundingClientRect().width
-    select.style.width = `${tempSelectWidth}px`
+    const tempSelectWidth = window.getComputedStyle(tempSelect).width
+    select.style.width = tempSelectWidth
     tempSelect.remove()
   }
 
