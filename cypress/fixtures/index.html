@@ -40,6 +40,9 @@
       input:invalid {
         border-color: red;
       }
+      hr {
+        margin: 2em 0;
+      }
     </style>
   </head>
 
@@ -59,7 +62,39 @@
         <p>Some text below the date picker so we can check the calendar floats over it.</p>
 
         <input type="submit">
+
+        <hr>
+
+        <template id="tmpl">
+          <div data-controller='datepicker'>
+             <input data-datepicker-target='input'
+                    type="text"
+                    name="published_on"
+                    value="2024-04-30">
+             <button data-datepicker-target='toggle'>cal</button>
+          </div>
+        </template>
+
+        <button type="button" id="add">Add second datepicker</button>
+
+        <p>change: <span id="count">0</span></p>
       </form>
     </div>
+
+    <script>
+      document.querySelector("#add").addEventListener("click", e => {
+        const template = document.querySelector("#tmpl")
+        const clone = template.content.cloneNode(true)
+
+        clone.querySelector("input").addEventListener("change", e => {
+          const el = document.querySelector("#count")
+          const count = Number(el.textContent)
+          el.textContent = String(count + 1)
+        })
+
+        const form = document.querySelector("form")
+        form.appendChild(clone)
+      })
+    </script>
   </body>
 </html>

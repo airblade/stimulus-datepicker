@@ -133,3 +133,7 @@ Cypress.Commands.add("assertEvent", (eventName) => {
 Cypress.Commands.add("assertValidationMessage", (message) => {
   cy.get(visibleInput).invoke('prop', 'validationMessage').should('equal', message)
 })
+
+Cypress.Commands.add("assertChangeCount", (count) => {
+  cy.get('#count').should('have.text', String(count))
+})

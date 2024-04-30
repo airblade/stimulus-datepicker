@@ -91,6 +91,13 @@ describe('Stimulus datepicker', () => {
   })
 
 
+  it('does not fire a change event on connect', () => {
+    cy.assertChangeCount(0)
+    cy.contains('Add second datepicker').click()
+    cy.assertChangeCount(0)
+  })
+
+
   it('updates the input, closes the calendar, and does not submit the form when a date is chosen', () => {
     cy.showCalendar()
     cy.listen('input', 'change')
