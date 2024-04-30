@@ -3,6 +3,9 @@
 
 ## Unreleased
 
+
+## v1.0.9 (30 April 2024)
+
 * Fix dropdown width on Chrome. (#30)
 
 
